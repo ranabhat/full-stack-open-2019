@@ -1,0 +1,20 @@
+title Single Page Application Sequence Diagram When Opened in the Browser
+
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa
+server-->browser: HTML-code
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/main.css
+server-->browser: main.css
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/spa.js
+server-->browser: spa.js
+note over browser:
+browser starts executing js-code
+that fetches the notes from the server as JSON-data 
+and adds HTML elements for displaying the notes to 
+the page using the DOM-API.
+end note
+browser->server: HTTP GET https://fullstack-exampleapp.herokuapp.com/data.json
+server-->browser: [{"content":"new note","date":"2019-09-20T08:13:22.831Z"}, ...]
+note over browser:
+the contents of page are manipulated
+with JavaScript that executes in the browser
+end note

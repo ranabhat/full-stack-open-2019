@@ -1,0 +1,12 @@
+title Create a New Note Sequence for SPA
+
+note right of browser: Form Submit Event
+browser->server: HTTP POST https://fullstack-exampleapp.herokuapp.com/new_note_spa
+server-->browser: HTTP status code 201
+note over server:
+the server does not ask for a redirect, 
+end note
+note over browser:
+the browser stays on the same page, 
+and sends no further HTTP-requests
+end note
