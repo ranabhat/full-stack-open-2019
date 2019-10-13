@@ -20,11 +20,11 @@ const TotalVote = ({ vote }) => {
 }
 
 const Result = ({ result, allAnecdoteCountState, voteIndex, value }) => {
-    //console.log('result',result)
-    //console.log('vote', voteIndex)
-    console.log('anecdote state', allAnecdoteCountState)
+    // console.log('result',result)
+    // console.log('vote', voteIndex)
+    // console.log('anecdote state', allAnecdoteCountState)
     const totalVoteCount = allAnecdoteCountState.reduce((acc, curr) => acc + curr, 0)
-    console.log('totalVoteCount', totalVoteCount)
+   // console.log('totalVoteCount', totalVoteCount)
     if (totalVoteCount === 0) {
         return(
             <p>Vote Count Not Started. Please press Vote to find out the anecdotes with most votes</p>
@@ -48,10 +48,10 @@ const App = (props) => {
 
   const handleAnecdoteClick = () => {
       anecdoteCount[selected] += vote //[...anecdotesCount][selected] + 1
-      console.log('anecdotesCountNow', anecdoteCount)
+     // console.log('anecdotesCountNow', anecdoteCount)
       const mostVotesIndex = anecdoteCount.indexOf(Math.max.apply(Math, anecdoteCount))
-      console.log('index of most votes', mostVotesIndex)
-      console.log('Value of most votes index', anecdoteCount[mostVotesIndex])
+     // console.log('index of most votes', mostVotesIndex)
+     // console.log('Value of most votes index', anecdoteCount[mostVotesIndex])
       setSelected(getRandomInt(6))
       setVote(0)
       setMostVoteIndex(mostVotesIndex)
