@@ -20,8 +20,8 @@ const TotalVote = ({ vote }) => {
 }
 
 const Result = ({ result, allAnecdoteCountState, voteIndex, value }) => {
-    console.log('result',result)
-    console.log('vote', voteIndex)
+    //console.log('result',result)
+    //console.log('vote', voteIndex)
     console.log('anecdote state', allAnecdoteCountState)
     const totalVoteCount = allAnecdoteCountState.reduce((acc, curr) => acc + curr, 0)
     console.log('totalVoteCount', totalVoteCount)
@@ -47,7 +47,7 @@ const App = (props) => {
   const [valueOfMostVoteIndex, setValueOfMostVoteIndex] = useState(0)
 
   const handleAnecdoteClick = () => {
-      anecdoteCount[selected] = vote //[...anecdotesCount][selected] + 1
+      anecdoteCount[selected] += vote //[...anecdotesCount][selected] + 1
       console.log('anecdotesCountNow', anecdoteCount)
       const mostVotesIndex = anecdoteCount.indexOf(Math.max.apply(Math, anecdoteCount))
       console.log('index of most votes', mostVotesIndex)
