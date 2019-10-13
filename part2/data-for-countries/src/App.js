@@ -12,19 +12,16 @@ const Filter = ({ filterLabel, handleSearchChange }) => {
 const CountryFull = ({ country }) => {
   return (
     <div key={country.name}>
-    <h1>{country.name}</h1>
-    <p>capital {country.capital} </p>
-    <p>population {country.population}</p>
-    <h3>languages</h3>
-    <ul>
-        {country.languages.map(language => <li key={language.name}>{language.name}</li>)}
-    </ul>
-    <img alt="country-flag" width="200" height="200" src={country.flag}></img>
-    
-     <Weather capital={country.capital}/> 
-
-</div>
-     
+      <h1>{country.name}</h1>
+      <p>capital {country.capital} </p>
+      <p>population {country.population}</p>
+      <h3>languages</h3>
+      <ul>
+          {country.languages.map(language => <li key={language.name}>{language.name}</li>)}
+      </ul>
+      <img alt="country-flag" width="200" height="200" src={country.flag}></img>
+      <Weather capital={country.capital}/> 
+  </div>   
  )
 }
 const CountryLess = ({ country, handleShowClick }) => {
@@ -36,7 +33,6 @@ const CountryLess = ({ country, handleShowClick }) => {
   )
 }
 const Countries = ({ countries }) => {
-
   const values = (countries.length > 10) 
     ? 'Too many matches, specify another filter'
     : countries
@@ -45,9 +41,7 @@ const Countries = ({ countries }) => {
     {values}
     </div>
   )
-
 }
-
 const App = () => {
   //const [newsearch, setNewSearch] = useState('')
   const [country, setCountry] = useState([])
@@ -98,8 +92,6 @@ const App = () => {
        country={country} handleShowClick={handleShowClick(country.name)}
     />
    )
-
-
   return(
     <div>
     <Filter filterLabel={'find countries'} handleSearchChange={handleSearchChange} />
