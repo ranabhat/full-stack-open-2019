@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Person from './components/Person'
+import axios from 'axios'
 
 const Header = ({ title }) => {
   return(
@@ -39,12 +40,24 @@ const Persons = ({ persons }) => {
 
 const App = () => {
   const [ persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '22-33-4567' },{ name: 'sina', number: '33-22-7654' }
+    /*{ name: 'Arto Hellas', number: '22-33-4567' },{ name: 'sina', number: '33-22-7654' }*/
   ]) 
   const [ newName, setNewName ] = useState('')
   const [ newNumber, setNewNumber ] = useState('')
   const [ newSearch, setNewSearch ] = useState('')
   const [showAll, setShowAll] = useState(true)
+
+  // Fetching data from server
+  useEffect(() => {
+    console.log('effect')
+    axios
+      .get('http://localhost:3001/persons')
+      .then(response => {
+        console.log('promise fulfilled')
+        setPersons(response.data)
+      })
+  }, [])
+
   // filter the person array => convert name of each person element to lowercase
   // The index of the first occurrence of searchValue, or -1 if not found
   // Note: The indexOf() method is case sensitive. For example, the following expression returns -1:
