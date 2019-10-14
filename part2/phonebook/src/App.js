@@ -53,7 +53,7 @@ const App = () => {
       name: newName,
       number: newNumber
     }
-    const findPersonDuplicate = persons.find(person => person.name === personObject.name)
+    const findPersonDuplicate = persons.find(person => person.name.toLowerCase() === personObject.name.toLowerCase())
     //console.log('ispersonduplicate', findPersonDuplicate)
     if (findPersonDuplicate === undefined) {
       personService
@@ -76,7 +76,7 @@ const App = () => {
       personService 
         .update(findPersonDuplicate.id, personObject)
         .then(() => {
-          persons.find(person => person.name === personObject.name).number = personObject.number
+          persons.find(person => person.name.toLowerCase() === personObject.name.toLowerCase()).number = personObject.number
          // alert(`${personObject.name} is already added to phonebook, replace the old number with a new one?`)
          setErrorMessage(
           `${personObject.name} is already added to phonebook, replace the old number with a new one?`
