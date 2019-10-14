@@ -172,9 +172,9 @@ const App = () => {
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
-        setPersons(afterDeleteRemainingPerson)
-        setNewName('')
-        setNewNumber('')
+      setPersons(afterDeleteRemainingPerson)
+      setNewName('')
+      setNewNumber('')
       })
   }
   
