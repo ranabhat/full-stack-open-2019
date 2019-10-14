@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import Person from './components/Person'
-import axios from 'axios'
+import personService from './services/persons'
 
 const Header = ({ title }) => {
   return(
@@ -13,6 +13,18 @@ const Filter = ({ filterLabel, handleSearchChange }) => {
     <div>
     <p>{filterLabel} <input onChange={handleSearchChange} /></p>
     </div>
+  )
+}
+
+const Notification = ({ message, colorErrorMessage }) => {
+  if (message === null) {
+    return null
+  }
+  return (
+    <div className={colorErrorMessage}>
+      {message}
+    </div>
+
   )
 }
 
@@ -46,15 +58,15 @@ const App = () => {
   const [ newNumber, setNewNumber ] = useState('')
   const [ newSearch, setNewSearch ] = useState('')
   const [showAll, setShowAll] = useState(true)
+  const [errorMessage, setErrorMessage] = useState(null)
+  const [colorErrorMessage, setColorErrorMessage] = useState('')
 
   // Fetching data from server
   useEffect(() => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(initialPersons => {
+        setPersons(initialPersons)
       })
   }, [])
 
@@ -69,7 +81,7 @@ const App = () => {
   const rows = () => personToShow.map(person =>
       <Person 
          key={person.name}
-         person={person}
+         person={person} handleDeleteClick={() => handleDeleteClick(person.id)}
       />
     )
 
@@ -83,18 +95,56 @@ const App = () => {
     const findPersonDuplicate = persons.find(person => person.name === personObject.name)
     //console.log('ispersonduplicate', findPersonDuplicate)
     if (findPersonDuplicate === undefined) {
-      setPersons(persons.concat(personObject))
-      setNewName('')
-      setNewNumber('')
-  
+      personService
+        .create(personObject)
+        .then(returnedPerson => {
+            //alert(`Added ${personObject.name} to phonebook.`)
+            setErrorMessage(
+              `Added ${personObject.name} to phonebook.`
+            )
+            setColorErrorMessage('error')
+            setTimeout(() => {
+              setErrorMessage(null)
+            }, 5000)
+            setPersons(persons.concat(returnedPerson))
+            setNewName('')
+            setNewNumber('')
+      })
     }
     else {
-      alert(`${newName} is already added to phonebook`)
-      setPersons(persons)
-      setNewName('')
-      setNewNumber('')
+      personService 
+        .update(findPersonDuplicate.id, personObject)
+        .then(() => {
+          persons.find(person => person.name === personObject.name).number = personObject.number
+         // alert(`${personObject.name} is already added to phonebook, replace the old number with a new one?`)
+         setErrorMessage(
+          `${personObject.name} is already added to phonebook, replace the old number with a new one?`
+          )
+         setColorErrorMessage('error')
+         setTimeout(() => {
+          setErrorMessage(null)
+          }, 5000)
+          setPersons(persons)
+         // console.log('update person', persons)
+          setNewName('')
+          setNewNumber('')
+        })
+      //alert(`${newName} is already added to phonebook`)
+      //setPersons(persons)
+       .catch(error => {
+         //alert(`note has been deleted`)
+         setErrorMessage(
+          `Information of ${personObject.name} has already been removed from the server.`
+          )
+         setColorErrorMessage('errorRed')
+         setTimeout(() => {
+          setErrorMessage(null)
+          }, 5000)
+          setPersons(persons)
+       })
     } 
   }
+
   const handlePersonChange = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value) 
@@ -105,21 +155,33 @@ const App = () => {
   const handleSearchChange = (event) => {
     setNewSearch(event.target.value)
     setShowAll(false)
-    //console.log('newSearch', newSearch)
-    // const searchItems = () => persons.filter(person => person.name.toLowerCase().indexOf(newSearch.toLowerCase()) !== -1)
-    // console.log('search items', searchItems())
-    // setPersons(searchItems())
   }
- // filter the person array => convert name of each person element to lowercase
- // The index of the first occurrence of searchValue, or -1 if not found
- // Note: The indexOf() method is case sensitive. For example, the following expression returns -1:
- // 'Blue Whale'.indexOf('blue'); // returns -1
- // const searchItems = () => persons.filter(person => person.name.toLowerCase().indexOf(newSearch.toLowerCase()) !== -1)
- // console.log('search items', searchItems())
+  const handleDeleteClick = id => {
+   // console.log('delete is pressed')
+   const findPersonToDelete = persons.find(person => person.id === id)
+   personService
+      .deletes(findPersonToDelete.id, findPersonToDelete)
+      .then(() => {
+        const afterDeleteRemainingPerson = persons.filter(person => person.id !== findPersonToDelete.id)
+       // console.log('after delete remaining person', afterDeleteRemainingPerson)
+       // alert(`Delete ${findPersonToDelete.name} ?`)
+       setErrorMessage(
+        `Delete ${findPersonToDelete.name} from phonebook.`
+      )
+      setColorErrorMessage('errorRed')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+        setPersons(afterDeleteRemainingPerson)
+        setNewName('')
+        setNewNumber('')
+      })
+  }
   
   return (
     <div>
       <Header title={'Phonebook'} />
+      <Notification message={errorMessage} colorErrorMessage={colorErrorMessage} />
       <Filter filterLabel={'filter show with:'} handleSearchChange={handleSearchChange}/>
       <Header title={'add a new'} />
       <PersonForm addPerson={addPerson} newName={newName} handlePersonChange={handlePersonChange} newNumber={newNumber} handleNumberChange={handleNumberChange}/>

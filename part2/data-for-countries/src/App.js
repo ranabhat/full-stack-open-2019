@@ -71,12 +71,13 @@ const App = () => {
     setShowAll(false)
   }
 
-  const handleShowClick = (name) => () => {
+  const handleShowClick = name => {
    // console.log('name show pressed', name)
     const whichCountry = countryToShow.filter(country => country.name === name)
    // setCountry(countryToShow.filter(country => country.name === name))
    console.log('which county', whichCountry)
    setCountry(whichCountry)
+ 
   }
 
   const rows = () => (countryToShow.length === 1) 
@@ -89,7 +90,7 @@ const App = () => {
    : countryToShow.map(country =>
     <CountryLess
        key={country.name + country.capital}
-       country={country} handleShowClick={handleShowClick(country.name)}
+       country={country} handleShowClick={() => handleShowClick(country.name)}
     />
    )
   return(
