@@ -1,47 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
-import Weather from './components/Weather'
+import Filter from './components/Filter'
+import Countries from './components/Countries'
+import CountryFull from './components/CountryFull'
+import CountryLess from './components/CountryLess'
 
-const Filter = ({ filterLabel, handleSearchChange }) => {
-  return(
-    <div>
-    <p>{filterLabel} <input onChange={handleSearchChange} /></p>
-    </div>
-  )
-}
-const CountryFull = ({ country }) => {
-  return (
-    <div key={country.name}>
-      <h1>{country.name}</h1>
-      <p>capital {country.capital} </p>
-      <p>population {country.population}</p>
-      <h3>languages</h3>
-      <ul>
-          {country.languages.map(language => <li key={language.name}>{language.name}</li>)}
-      </ul>
-      <img alt="country-flag" width="200" height="200" src={country.flag}></img>
-      <Weather capital={country.capital}/> 
-  </div>   
- )
-}
-const CountryLess = ({ country, handleShowClick }) => {
-  return(
-    <div key={country.name}>
-    {country.name}
-    <button onClick={handleShowClick}>show</button>
-    </div>
-  )
-}
-const Countries = ({ countries }) => {
-  const values = (countries.length > 10) 
-    ? 'Too many matches, specify another filter'
-    : countries
-  return(
-    <div>
-    {values}
-    </div>
-  )
-}
 const App = () => {
   //const [newsearch, setNewSearch] = useState('')
   const [country, setCountry] = useState([])

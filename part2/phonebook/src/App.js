@@ -1,52 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import Person from './components/Person'
 import personService from './services/persons'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import Notification from './components/Notification'
+import Persons from './components/Persons'
 
 const Header = ({ title }) => {
   return(
     <h2>{title}</h2>
-  )
-}
-
-const Filter = ({ filterLabel, handleSearchChange }) => {
-  return(
-    <div>
-    <p>{filterLabel} <input onChange={handleSearchChange} /></p>
-    </div>
-  )
-}
-
-const Notification = ({ message, colorErrorMessage }) => {
-  if (message === null) {
-    return null
-  }
-  return (
-    <div className={colorErrorMessage}>
-      {message}
-    </div>
-
-  )
-}
-
-const PersonForm = ({ addPerson, newName, handlePersonChange, newNumber, handleNumberChange }) => {
-  return (
-    <form onSubmit={addPerson}> 
-    <div>
-      name: <input value={newName} onChange={handlePersonChange}/>
-    </div>
-    <div>
-      number: <input value={newNumber} onChange={handleNumberChange} />
-    </div>
-    <div>
-      <button type="submit">add</button>
-    </div>
-  </form>
-  )
-}
-
-const Persons = ({ persons }) => {
-  return(
-    <div>{persons}</div>
   )
 }
 
@@ -84,7 +46,6 @@ const App = () => {
          person={person} handleDeleteClick={() => handleDeleteClick(person.id)}
       />
     )
-
   const addPerson = (event) => {
     event.preventDefault()
     console.log('adding person button clicked', event.target)
@@ -141,12 +102,15 @@ const App = () => {
           setErrorMessage(null)
           }, 5000)
           setPersons(persons)
+          setNewName('')
+          setNewNumber('')
+
        })
     } 
   }
 
   const handlePersonChange = (event) => {
-    console.log(event.target.value)
+    //console.log(event.target.value)
     setNewName(event.target.value) 
   }
   const handleNumberChange = (event) => {
