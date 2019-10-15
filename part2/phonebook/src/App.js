@@ -48,14 +48,14 @@ const App = () => {
     )
   const addPerson = (event) => {
     event.preventDefault()
-    console.log('adding person button clicked', event.target)
+  //  console.log('adding person button clicked', event.target)
     const personObject = {
       name: newName,
       number: newNumber
     }
-    const findPersonDuplicate = persons.find(person => person.name.toLowerCase() === personObject.name.toLowerCase())
+   // const findPersonDuplicate = persons.find(person => person.name.toLowerCase() === personObject.name.toLowerCase())
     //console.log('ispersonduplicate', findPersonDuplicate)
-    if (findPersonDuplicate === undefined) {
+    //if (findPersonDuplicate === undefined) {
       personService
         .create(personObject)
         .then(returnedPerson => {
@@ -71,32 +71,34 @@ const App = () => {
             setNewName('')
             setNewNumber('')
       })
-    }
-    else {
-      personService 
-        .update(findPersonDuplicate.id, personObject)
-        .then(() => {
-          persons.find(person => person.name.toLowerCase() === personObject.name.toLowerCase()).number = personObject.number
-         // alert(`${personObject.name} is already added to phonebook, replace the old number with a new one?`)
-         setErrorMessage(
-          `${personObject.name} is already added to phonebook, replace the old number with a new one?`
-          )
-         setColorErrorMessage('error')
-         setTimeout(() => {
-          setErrorMessage(null)
-          }, 5000)
-          setPersons(persons)
-         // console.log('update person', persons)
-          setNewName('')
-          setNewNumber('')
-        })
-      //alert(`${newName} is already added to phonebook`)
-      //setPersons(persons)
+      /*
+          }
+          else {
+            personService 
+              .update(findPersonDuplicate.id, personObject)
+              .then(() => {
+                persons.find(person => person.name.toLowerCase() === personObject.name.toLowerCase()).number = personObject.number
+              // alert(`${personObject.name} is already added to phonebook, replace the old number with a new one?`)
+              setErrorMessage(
+                `${personObject.name} is already added to phonebook, replace the old number with a new one?`
+                )
+              setColorErrorMessage('error')
+              setTimeout(() => {
+                setErrorMessage(null)
+                }, 5000)
+                setPersons(persons)
+              // console.log('update person', persons)
+                setNewName('')
+                setNewNumber('')
+              })
+          alert(`${newName} is already added to phonebook`)
+          setPersons(persons)*/
+
+
        .catch(error => {
          //alert(`note has been deleted`)
-         setErrorMessage(
-          `Information of ${personObject.name} has already been removed from the server.`
-          )
+        // console.log(error.response.data)
+         setErrorMessage(` ${(error.response.data)['error']}`)
          setColorErrorMessage('errorRed')
          setTimeout(() => {
           setErrorMessage(null)
@@ -107,7 +109,7 @@ const App = () => {
 
        })
     } 
-  }
+  //}
 
   const handlePersonChange = (event) => {
     //console.log(event.target.value)
