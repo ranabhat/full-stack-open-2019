@@ -6,7 +6,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 const Person = require('./models/person')
 
-let persons = [
+/*let persons = [
   {
     'name': 'Arto Hellas',
     'number': '040-123456',
@@ -27,7 +27,7 @@ let persons = [
     'number': '39-23-6423122',
     'id': 4
   }
-]
+]*/
 app.use(cors())
 app.use(express.static('build'))
 app.use(bodyParser.json())
@@ -40,11 +40,15 @@ app.get('/', (request, response) => {
 })
 
 app.get('/info', (request, response) => {
-  const numberOfPerson = persons.length
-  const date = new Date()
-  response.send(
-    `<p>Phonebook has info for ${numberOfPerson} people</p> 
-        <p>${date}</p>`)
+  // console.log('number of persons', persons.length)
+  const dateViewed = new Date()
+  // console.log(dateViewed)
+  // response.send(`<p>Number of notes ${persons.length}</p>
+  //                 <p> ${dateViewed}`)
+  Person.find({}).then(persons => {
+    response.send(`<p>Number of persons ${persons.length}</p>
+        <p> ${dateViewed}`)
+  })
 })
 
 app.get('/api/persons', (request, response) => {
