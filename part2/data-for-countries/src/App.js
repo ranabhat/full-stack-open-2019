@@ -38,7 +38,7 @@ const App = () => {
    // console.log('name show pressed', name)
     const whichCountry = countryToShow.filter(country => country.name === name)
    // setCountry(countryToShow.filter(country => country.name === name))
-   console.log('which county', whichCountry)
+   //console.log('which county', whichCountry)
    setCountry(whichCountry)
  
   }

@@ -20,20 +20,14 @@ const Weather = ({ capital }) => {
         .get('http://api.weatherstack.com/current', {params})
         .then(response => {
             const apiResponse = response.data
-    //      console.log(apiResponse.current.temperature)
-    //      console.log(apiResponse.current.weather_icons[0])
             setLocation(apiResponse.location.name)
             setWeather(apiResponse.current.temperature)
             setWind(apiResponse.current.wind_speed)
             setWindDir(apiResponse.current.wind_dir)
             setWeatherIcon(apiResponse.current.weather_icons[0])
-        //     setTodos({ name: apiResponse.location.name,
-        //             temperature: apiResponse.temperature,
-        //             wind_speed: apiResponse.wind_speed,
-        //             wind_dir: apiResponse.wind_dir,
-        //             weather_icons: apiResponse.weather_icons[0]             
-        // })
-        
+        })
+        .catch(error => {
+            console.log('Error Fetching data')
         })
     }, [params])
                 
