@@ -25,32 +25,7 @@ const favoriteBlog = blogs => {
   }
 }
 
-const mostBlogs = blogs => {
-  if (blogs.length === 0) {
-
-    return { }
-  } else {
-    const mapBlogPostToAuthors = blogs.map(blogs => blogs.author)
-    const countedAuthors = mapBlogPostToAuthors.reduce((allAuthors, author) => {
-      if( author in allAuthors) {
-        allAuthors[author]++
-      }
-      else {
-        allAuthors[author] = 1
-      }
-      return allAuthors
-    }, {})
-    const blogsAuthorNameAsKeys = Object.keys(countedAuthors)
-    const blogsAuthorCountAsValues = Object.values(countedAuthors)
-    const maxCountedAuthorValue = Math.max(...blogsAuthorCountAsValues)
-    const indexOfMaxCountedAuthorValue = blogsAuthorCountAsValues.indexOf(maxCountedAuthorValue)
-    const authorWithMaxBlogs = blogsAuthorNameAsKeys[indexOfMaxCountedAuthorValue]
-    return { author: authorWithMaxBlogs,
-      blogs: maxCountedAuthorValue }
-  }
-}
-
-/* Helper function for mostLikes */
+/* Helper function for mostBlogs and  mostLikes */
 const groupBy = (blogsArray, blogsProperty) => {
   return blogsArray.reduce((acc, blogs) => {
     const key = blogs[blogsProperty]
@@ -61,12 +36,28 @@ const groupBy = (blogsArray, blogsProperty) => {
     return acc
   }, {})
 }
+// groupBy(blogs, author) will return =>
+/*
+{ 'Michael Chan': [ { author: 'Michael Chan', likes: 7 } ],
+  'Edsger W. Dijkstra':
+   [ { author: 'Edsger W. Dijkstra', likes: 5 },
+     { author: 'Edsger W. Dijkstra', likes: 12 } ]
+*/
+const mostBlogs = blogs => {
+  if (blogs.length === 0) {
 
-const arrayFuncd = array => {
-  const likesArray = array.map(item => item.likes)
-  const reducer = (accumulator, currentValue) => accumulator + currentValue
-  const totalLikes = likesArray.reduce(reducer)
-  return totalLikes
+    return { }
+  } else {
+    const groupedAuthor = groupBy([...blogs], 'author')
+    const groupedAuthorKeysArray = Object.keys(groupedAuthor)
+    const groupedAuthorValuesArray = Object.values(groupedAuthor)
+    const totalBlogsByEachAuthorArray = groupedAuthorValuesArray.map(value => value.length)
+    const maxCountedAuthorValue = Math.max(...totalBlogsByEachAuthorArray)
+    const indexOfMaxCountedAuthorValue = totalBlogsByEachAuthorArray.indexOf(maxCountedAuthorValue)
+    const authorWithMaxBlogs = groupedAuthorKeysArray[indexOfMaxCountedAuthorValue]
+    return { author: authorWithMaxBlogs,
+      blogs: maxCountedAuthorValue }
+  }
 }
 
 const mostLikes = blogs => {
@@ -87,7 +78,7 @@ const mostLikes = blogs => {
      { author: 'Robert C. Martin', likes: 2 } ]*/
 
     //console.log(arrayFuncd(array2))
-    const totalLikesArrayFromAuthorValuesArray = groupedAuthorValuesArray.map(value => arrayFuncd(value))
+    const totalLikesArrayFromAuthorValuesArray = groupedAuthorValuesArray.map(value => totalLikes(value))
 
     // console.log(totalLikesArrayFromAuthorValuesArray)
     const likesMaximumValue = Math.max(...totalLikesArrayFromAuthorValuesArray)
