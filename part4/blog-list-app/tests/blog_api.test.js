@@ -34,12 +34,14 @@ test('there is key id in a blog object', async () => {
 
 })
 
+/* Get all blogs test */
 test('there are two blogs', async () => {
 
   const response = await api.get('/api/blogs')
   expect(response.body.length).toBe(2)
 })
 
+/* When added valid test*/
 test('a valid blog can be added', async () => {
   const newBlog = {
     title: '12 rules of life',
@@ -81,6 +83,7 @@ test('a blog without likes properties will add likes property with zero value', 
   expect(contents).toContain('12 rules of life')
 })
 
+/* When inserted invalid blog */
 test('blog without title and url properties', async () => {
   const newBlog = {
     author: 'Peter Anderson',
@@ -96,6 +99,42 @@ test('blog without title and url properties', async () => {
   expect(response.body.length).toBe(helper.initialBlogs.length)
 })
 
+/* When occurs Note Deletion */
+test('a blog can be deleted', async () => {
+  const blogsAtBeginning = await helper.blogsInDb()
+  const blogToDelete = blogsAtBeginning[0]
+
+  await api
+    .delete(`/api/blogs/${blogToDelete.id}`)
+  expect(204)
+
+  const blogsAtEnd = await helper.blogsInDb()
+
+  expect(blogsAtEnd.length).toBe(helper.initialBlogs.length - 1)
+
+  const blogContents = blogsAtEnd.map(r => r.title)
+
+  expect(blogContents).not.toContain(blogToDelete.title)
+
+})
+
+/* When a blog is updated test*/
+test('a valid blog can be updated', async () => {
+  const blogsAtBeginning = await helper.blogsInDb()
+  let blogToUpdate = blogsAtBeginning[0]
+  const blogiToUpdate = {
+    likes: 5
+  }
+  await api
+    .put(`/api/blogs/${blogToUpdate.id}`)
+    .send(blogiToUpdate)
+    .expect(200)
+    .expect('Content-Type', /application\/json/)
+
+  const resultBlog = await helper.blogsInDb()
+  expect(resultBlog[0].likes).toBe(6)
+
+})
 
 afterAll(() => {
   mongoose.connection.close()
