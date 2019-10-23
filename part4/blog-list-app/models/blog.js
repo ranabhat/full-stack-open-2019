@@ -7,7 +7,11 @@ const blogSchema = new mongoose.Schema({
   title: { type: String }, //, minlength: 3, required: true, unique: true , uniqueCaseInsensitive: true },
   author: { type: String }, //, required: true, validate: /^\d{3}-\d{3}-\d{2}\d*$/ }
   url: { type: String },
-  likes: { type: Number }
+  likes: { type: Number },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  }
 })
 
 // Apply the uniqueValidator plugin to userSchema to guarantee unique name
