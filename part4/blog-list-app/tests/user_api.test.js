@@ -94,7 +94,7 @@ describe('when there is initially one user at db', () => {
       .expect(400)
       .expect('Content-Type', /application\/json/)
 
-    // expect(result.body.error).toContain('username')
+    expect(result.body.error).toContain('User validation failed')
 
     const usersAtEnd = await helper.usersInDb()
     expect(usersAtEnd.length).toBe(usersAtStart.length)
