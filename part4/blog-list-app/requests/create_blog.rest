@@ -1,10 +1,10 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
-Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImJyb25lcGVhY2UiLCJpZCI6IjVkYjAxNWY1YTllZWY3MDQ0YjgxNjQyZCIsImlhdCI6MTU3MTgzNzEyN30.t7WHRElCSDRg1sMIZDkTLyFD_sFhIyCHbe2CLM1ik_4
+Authorization: bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Iml0VGVjaCIsImlkIjoiNWRiMDM1MThlZWM2YmIwYWU0ZjU4OWEwIiwiaWF0IjoxNTcxODY1Mzk1fQ.voUuu4RLyD_PbMHzvtJdl4YAbXkGogdbIRwkZcxZm58
 
 {
-    "title": "To Ace Your Job Interview, Get into Character and Rehearse",
-    "author": "Cathy Salit",
-    "url": "https://hbr.org/2017/04/to-ace-your-job-interview-get-into-character-and-rehearse",
-    "likes": 13
+    "title": "Ikigai: The Japanese Secret to a Long and Happy Life",
+    "author": "Thomas Oppong",
+    "url": "https://medium.com/thrive-global/ikigai-the-japanese-secret-to-a-long-and-happy-life-might-just-help-you-live-a-more-fulfilling-9871d01992b7",
+    "likes": 14
 }
