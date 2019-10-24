@@ -1,3 +1,5 @@
+const logger = require('./logger')
+
 const tokenExtractor = (request, response, next) => {
   // console.log('header', request.header)
   // console.log('autho', request.get('authorization'))
@@ -16,7 +18,7 @@ const unknownEndpoint = (request, response) => {
 }
 
 const errorHandler = (error, request, response, next) => {
-  console.log(error.message)
+  logger.error(error.message)
   if(error.name === 'CastError' && error.kind === 'ObjectId') {
     return response.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
