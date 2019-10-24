@@ -43,8 +43,21 @@ blogsRouter.post('/', async (request, response, next) => {
 
 blogsRouter.delete('/:id', async (request, response, next) => {
   try {
-    await Blog.findByIdAndRemove(request.params.id)
-    response.status(204).end()
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if (!request.token || !decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' })
+    }
+    const user = await User.findById(decodedToken.id)
+    const blog = await Blog.findById(request.params.id)
+
+    if (blog && (user.id.toString() === blog.user.toString() )) {
+
+      //try {
+      await Blog.findByIdAndRemove(request.params.id)
+      response.status(204).end()
+    } else if (!blog || !user) {
+      response.status(400).json({ error: 'already deleted or malformat blog id' })
+    }
   }
   catch (exception) {
     next(exception)
@@ -62,12 +75,6 @@ blogsRouter.put('/:id', async(request, response, next) => {
   try {
     const blogToUpdate = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
     response.json(blogToUpdate.toJSON())
-  // Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
-  //   .then(updatedBlog => {
-  //     console.log('updatedBlog', updatedBlog)
-  //     response.json(updatedBlog.toJSON())
-  //   })
-  //   .catch(error => next(error))
   } catch (exception) {
     next(exception)
   }
