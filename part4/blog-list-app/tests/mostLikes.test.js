@@ -71,7 +71,7 @@ describe('most likes', () => {
   test('when the blog list has one post, return author with max total likes', () => {
     const result = mostLikes(listWithMoreThanOneBlogs)
     expect(result).toEqual({
-      author: "Edsger W. Dijkstra",
+      author: 'Edsger W. Dijkstra',
       likes: 17
     })
   })

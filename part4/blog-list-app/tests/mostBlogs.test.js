@@ -71,7 +71,7 @@ describe('most blogs', () => {
   test('when the blog list has one post, return author and blog count to be 1', () => {
     const result = mostBlogs(listWithOneBlog)
     expect(result).toEqual({
-      author: "Edsger W. Dijkstra",
+      author: 'Edsger W. Dijkstra',
       blogs: 1
     })
   })
@@ -79,7 +79,7 @@ describe('most blogs', () => {
   test('when list more than one blog provide author with max blogs and number of blogs', () => {
     const result = mostBlogs(listWithMoreThanOneBlogs)
     expect(result).toEqual({
-      author: "Robert C. Martin",
+      author: 'Robert C. Martin',
       blogs: 3
     })
   })

@@ -65,14 +65,14 @@ describe('favorite blog', () => {
 
   test('when list has only one blog provides the info about the blog post', () => {
     const result = favoriteBlog(listWithOneBlog)
-    expect(result).toEqual({ title: "Go To Statement Considered Harmful", author: "Edsger W. Dijkstra", likes: 5 })
+    expect(result).toEqual({ title: 'Go To Statement Considered Harmful', author: 'Edsger W. Dijkstra', likes: 5 })
   })
   test('when list has many blog provides info about the most liked blog post', () => {
     const result = favoriteBlog(listWithMoreThanOneBlogs)
-    expect(result).toEqual({ title: "Canonical string reduction", author: "Edsger W. Dijkstra", likes: 12 })
+    expect(result).toEqual({ title: 'Canonical string reduction', author: 'Edsger W. Dijkstra', likes: 12 })
   })
   test('when list is empty show error message', () => {
     const result = favoriteBlog([])
-    expect(result).toEqual({ error: "Blog List is empty" })
+    expect(result).toEqual({ error: 'Blog List is empty' })
   })
 })
