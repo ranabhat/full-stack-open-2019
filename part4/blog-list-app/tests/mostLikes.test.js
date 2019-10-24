@@ -67,8 +67,15 @@ describe('most likes', () => {
   //     const result = mostBlogs([])
   //     expect(result).toEqual({})
   //   })
-
   test('when the blog list has one post, return author with max total likes', () => {
+    const result = mostLikes(listWithOneBlog)
+    expect(result).toEqual({
+      author: 'Edsger W. Dijkstra',
+      likes: 5
+    })
+  })
+
+  test('when the blog list has more than one post, return author with max total likes', () => {
     const result = mostLikes(listWithMoreThanOneBlogs)
     expect(result).toEqual({
       author: 'Edsger W. Dijkstra',

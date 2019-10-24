@@ -1,6 +1,6 @@
 const dummy = array => {
   return array.length === 0
-    ? 0
+    ? 1
     : array.length
 }
 

@@ -62,7 +62,10 @@ describe('total likes', () => {
       __v: 0
     }
   ]
-
+  test('when list is empty like count is zero', () => {
+    const result = totalLikes([])
+    expect(result).toBe(0)
+  })
   test('when list has only one blog equals the likes of that', () => {
     const result = totalLikes(listWithOneBlog)
     expect(result).toBe(5)
