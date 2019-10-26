@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 
 import loginService from './services/login'
 import blogService from './services/blogs'
+import Togglable from './components/Togglable'
 
 
 const LoginForm = ({ message, colorErrorMessage, handleLogin, username, password, onUsernameChange, onPasswordChange }) => {
@@ -82,14 +83,16 @@ const UserBlog = ({ message, colorErrorMessage, user, blogs, handleLogOut, handl
       <div> <p>{user.name} is logged in 
       <button onClick={handleLogOut}>logout</button></p></div>
       <div>
-      <FormBlogCreate title={title}
-         author={author}
-         url={url}
-         handleCreateBlogPost={handleCreateBlogPost}
-         onTitleChange={onTitleChange}
-         onAuthorChange={onAuthorChange}
-         onUrlChange={onUrlChange}
-         />
+      <Togglable buttonLabel="new note">
+        <FormBlogCreate title={title}
+          author={author}
+          url={url}
+          handleCreateBlogPost={handleCreateBlogPost}
+          onTitleChange={onTitleChange}
+          onAuthorChange={onAuthorChange}
+          onUrlChange={onUrlChange}
+          />
+      </Togglable>
       {blogs.map(blog => 
       <Blog key={blog.id} blog={blog} /> )}
       </div>
@@ -179,13 +182,13 @@ const App = () => {
 /*************************************************************************************************************/
 
  /**************************************When user logged in handle Blog Create *************************************************/
+ 
  const handleCreateBlogPost = (event) => {
   event.preventDefault() // prevents the default action of submitting a form
   const blogObject = {
     title: title,
     author: author,
     url: url,
-  // id: notes.length +1
 }
 
   blogService
@@ -220,9 +223,12 @@ const App = () => {
   return(
     <div>
     {/* <h2>Log in to application</h2> */}
-    {user === null ?
-      <LoginForm message={errorMessage} colorErrorMessage={colorErrorMessage} handleLogin={handleLogin} username={username} password={password} onUsernameChange={handleUsername} onPasswordChange={handlePassword} /> :
-      <UserBlog user={user} blogs={blogs} handleLogOut={handleLogOut}
+    {user === null 
+     ? <LoginForm message={errorMessage} colorErrorMessage={colorErrorMessage} handleLogin={handleLogin}
+         username={username} password={password}
+         onUsernameChange={handleUsername} onPasswordChange={handlePassword} /> 
+         
+     : <UserBlog user={user} blogs={blogs} handleLogOut={handleLogOut}
          message={errorMessage} colorErrorMessage={colorErrorMessage}
          title={title}
          author={author}
