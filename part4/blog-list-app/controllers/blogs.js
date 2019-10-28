@@ -66,15 +66,36 @@ blogsRouter.delete('/:id', async (request, response, next) => {
 
 blogsRouter.put('/:id', async(request, response, next) => {
   const body = request.body
-  const blogs = await Blog.find({})
-  const blogForWhomLikeToUpdate = blogs.filter(blog => blog.id === request.params.id)
-  const previousLikesFromBlog = blogForWhomLikeToUpdate[0].likes
-  const blog = {
-    likes: body.likes + previousLikesFromBlog
-  }
   try {
-    const blogToUpdate = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
-    response.json(blogToUpdate.toJSON())
+    const decodedToken = jwt.verify(request.token, process.env.SECRET)
+    if (!request.token || !decodedToken.id) {
+      return response.status(401).json({ error: 'token missing or invalid' })
+    }
+    const user = await User.findById(decodedToken.id)
+    const blogs = await Blog.findById(request.params.id)
+    //const blogForWhomLikeToUpdate = blogs.filter(blog => blog.id === request.params.id)
+    const previousLikesFromBlog = blogs.likes
+    const blog = {
+      title: body.title,
+      author: body.author,
+      url: body.url,
+      likes: previousLikesFromBlog + 1,
+      user: user._id
+    }
+    //const blogs = await Blog.find({})
+    // const blogForWhomLikeToUpdate = blogs.filter(blog => blog.id === request.params.id)
+    // const previousLikesFromBlog = blogForWhomLikeToUpdate[0].likes
+    // const blog = {
+    //   likes: body.likes + previousLikesFromBlog
+    // }
+    // try {
+    if (blog && (user.id.toString() === blog.user.toString() )) {
+
+      const blogToUpdate = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+      response.json(blogToUpdate.toJSON())
+    } else if (!blog || !user) {
+      response.status(400).json({ error: 'already deleted or malformat blog id' })
+    }
   } catch (exception) {
     next(exception)
   }
