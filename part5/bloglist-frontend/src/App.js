@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import loginService from './services/login'
 import blogService from './services/blogs'
 import Togglable from './components/Togglable'
+import BlogPostTogglable from './components/BlogPostTogglable'
+//import Blog from './components/Blog'
 
 
 const LoginForm = ({ message, colorErrorMessage, handleLogin, username, password, onUsernameChange, onPasswordChange }) => {
@@ -75,7 +77,7 @@ const FormBlogCreate = ({ handleCreateBlogPost, title, onTitleChange, author, on
   )
 }
 
-const UserBlog = ({ message, colorErrorMessage, user, blogs, handleLogOut, handleCreateBlogPost, title, onTitleChange, author, onAuthorChange, url, onUrlChange }) => {
+const UserBlog = ({ likes, likeClick, message, colorErrorMessage, user, blogs, handleLogOut, handleCreateBlogPost, title, onTitleChange, author, onAuthorChange, url, onUrlChange }) => {
   return(
     <div>
       <h2>blogs</h2>
@@ -94,15 +96,35 @@ const UserBlog = ({ message, colorErrorMessage, user, blogs, handleLogOut, handl
           />
       </Togglable>
       {blogs.map(blog => 
-      <Blog key={blog.id} blog={blog} /> )}
+      <Blog key={blog.id} blog={blog} likeClick={likeClick} likes={likes}/> )}
       </div>
     </div>
   )
 }
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, likeClick, likes }) => {
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5
+  }
+  console.log('likes', likes)
+//console.log('blog', blog.user===undefined ? null : blog.user.name)
   return(
-    <>{blog.title} {blog.author} <br/></> 
+    <div style={blogStyle}>
+      {/* <div onClick={() => console.log('clicked')}> */}
+        <BlogPostTogglable titleLabel={blog.title} authorLabel={blog.author}>
+        <div>
+        {blog.url} <br/>
+        {((likes === '') ? blog.likes : likes) + ` likes`} <button onClick={likeClick(blog.id)}>likes</button><br/>
+        {`Added by ${blog.user===undefined ? 'No user' : blog.user.name}`}
+        </div>
+        </BlogPostTogglable>
+       
+      </div>
+    // </div>
   )
 }
 
@@ -127,6 +149,7 @@ const App = () => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [url, setUrl] = useState('')
+  const [likes, setLikes] = useState('')
 
   /**************************************Fetching data from server *************************************************/
   useEffect(() => {
@@ -182,9 +205,34 @@ const App = () => {
 /*************************************************************************************************************/
 
  /**************************************When user logged in handle Blog Create *************************************************/
+ const handleLikeClick = id => () => {
+  //console.log(blogs)
  
+
+  const blog = blogs.find(blog => blog.id === id)
+  const blogObject = {
+    title: blog.title,
+    likes: blog.likes,
+    author: blog.author,
+    url: blog.url,
+    user: blog.user
+  } 
+
+  console.log(blog)
+  console.log(id)
+
+  blogService
+    .update(blog.id, blogObject)
+    .then(() => {
+      blogs.find(blog => blog.id === id).likes += 1
+    })
+    setBlogs(blogs)
+    setLikes(blogs.find(blog => blog.id === id).likes + 1)
+  
+ }
  const handleCreateBlogPost = (event) => {
   event.preventDefault() // prevents the default action of submitting a form
+  
   const blogObject = {
     title: title,
     author: author,
@@ -228,7 +276,7 @@ const App = () => {
          username={username} password={password}
          onUsernameChange={handleUsername} onPasswordChange={handlePassword} /> 
          
-     : <UserBlog user={user} blogs={blogs} handleLogOut={handleLogOut}
+     : <UserBlog likes={likes} likeClick={handleLikeClick} user={user} blogs={blogs} handleLogOut={handleLogOut}
          message={errorMessage} colorErrorMessage={colorErrorMessage}
          title={title}
          author={author}
