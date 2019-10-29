@@ -77,7 +77,7 @@ const FormBlogCreate = ({ handleCreateBlogPost, title, onTitleChange, author, on
   )
 }
 
-const UserBlog = ({ likeClick, message, colorErrorMessage, user, blogs, handleLogOut, handleCreateBlogPost, title, onTitleChange, author, onAuthorChange, url, onUrlChange }) => {
+const UserBlog = ({ likeClick, deleteClick, message, colorErrorMessage, user, blogs, handleLogOut, handleCreateBlogPost, title, onTitleChange, author, onAuthorChange, url, onUrlChange }) => {
   //console.log('userblogs', blogs)
   /* Sort BlogPost By Number of Likes */
   const sortBlogsByLikes = blogs.sort((a, b) => a.likes - b.likes)
@@ -100,13 +100,13 @@ const UserBlog = ({ likeClick, message, colorErrorMessage, user, blogs, handleLo
           />
       </Togglable>
       {sortBlogsByLikes.map(blog => 
-      <Blog key={blog.id} blog={blog} likeClick={likeClick} /> )}
+      <Blog key={blog.id} blog={blog} likeClick={likeClick} deleteClick={deleteClick} /> )}
       </div>
     </div>
   )
 }
 
-const Blog = ({ blog, likeClick }) => {
+const Blog = ({ blog, likeClick, deleteClick }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -124,7 +124,8 @@ const Blog = ({ blog, likeClick }) => {
         <div>
         {blog.url} <br/>
         {blog.likes + ` likes`} <button onClick={likeClick(blog.id)}>likes</button><br/>
-        {`Added by ${blog.user===undefined ? 'No user' : blog.user.name}`}
+        {`Added by ${blog.user===undefined ? 'No user' : blog.user.name}`} <br/>
+        <button onClick={deleteClick(blog.id)}>remove</button>
         </div>
         </BlogPostTogglable>
        
@@ -240,6 +241,8 @@ const App = () => {
     
   
  }
+
+ 
  const handleCreateBlogPost = (event) => {
   event.preventDefault() // prevents the default action of submitting a form
   
@@ -267,6 +270,20 @@ const App = () => {
 
  }
 
+ const handleDeleteBlogPost = id => () => {
+  
+  const findBlogToDelete = blogs.find(blog => blog.id === id)
+  blogService
+    .deletes(findBlogToDelete.id, findBlogToDelete)
+    .then(() => {
+      window.confirm(`remove blog ${findBlogToDelete.title} by ${findBlogToDelete.author} `)
+      setBlogs(blogs.filter(blog => blog.id !== findBlogToDelete.id))
+    })
+    .catch(error => {
+      console.log(error.message)
+    })
+ }
+
  const handleTitle = (event) => {
    setTitle(event.target.value)
  }
@@ -286,7 +303,9 @@ const App = () => {
          username={username} password={password}
          onUsernameChange={handleUsername} onPasswordChange={handlePassword} /> 
          
-     : <UserBlog likes={likes} likeClick={handleLikeClick} user={user} blogs={blogs} handleLogOut={handleLogOut}
+     : <UserBlog likes={likes} 
+         deleteClick={handleDeleteBlogPost} likeClick={handleLikeClick}
+         user={user} blogs={blogs} handleLogOut={handleLogOut}
          message={errorMessage} colorErrorMessage={colorErrorMessage}
          title={title}
          author={author}
