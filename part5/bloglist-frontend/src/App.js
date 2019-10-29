@@ -78,6 +78,10 @@ const FormBlogCreate = ({ handleCreateBlogPost, title, onTitleChange, author, on
 }
 
 const UserBlog = ({ likeClick, message, colorErrorMessage, user, blogs, handleLogOut, handleCreateBlogPost, title, onTitleChange, author, onAuthorChange, url, onUrlChange }) => {
+  //console.log('userblogs', blogs)
+  /* Sort BlogPost By Number of Likes */
+  const sortBlogsByLikes = blogs.sort((a, b) => a.likes - b.likes)
+  //console.log(sortBlogsByLikes)
   return(
     <div>
       <h2>blogs</h2>
@@ -95,7 +99,7 @@ const UserBlog = ({ likeClick, message, colorErrorMessage, user, blogs, handleLo
           onUrlChange={onUrlChange}
           />
       </Togglable>
-      {blogs.map(blog => 
+      {sortBlogsByLikes.map(blog => 
       <Blog key={blog.id} blog={blog} likeClick={likeClick} /> )}
       </div>
     </div>
