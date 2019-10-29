@@ -282,7 +282,7 @@ const App = () => {
          username={username} password={password}
          onUsernameChange={handleUsername} onPasswordChange={handlePassword} /> 
          
-     : <UserBlog likeClick={handleLikeClick} user={user} blogs={blogs} handleLogOut={handleLogOut}
+     : <UserBlog likes={likes} likeClick={handleLikeClick} user={user} blogs={blogs} handleLogOut={handleLogOut}
          message={errorMessage} colorErrorMessage={colorErrorMessage}
          title={title}
          author={author}
