@@ -100,13 +100,13 @@ const UserBlog = ({ likeClick, deleteClick, message, colorErrorMessage, user, bl
           />
       </Togglable>
       {sortBlogsByLikes.map(blog => 
-      <Blog key={blog.id} blog={blog} likeClick={likeClick} user={user.name} deleteClick={deleteClick} /> )}
+      <Blog key={blog.id} blog={blog} likeClick={likeClick} username={user.name} deleteClick={deleteClick} /> )}
       </div>
     </div>
   )
 }
 
-const Blog = ({ blog, likeClick, deleteClick, user}) => {
+const Blog = ({ blog, likeClick, deleteClick, username}) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -114,7 +114,7 @@ const Blog = ({ blog, likeClick, deleteClick, user}) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  console.log(user)
+  console.log(username)
  // console.log('likes', likes=== '')
   //console.log('bloglikes', blog.likes)
 //console.log('blog', blog.user===undefined ? null : blog.user.name)
@@ -125,8 +125,8 @@ const Blog = ({ blog, likeClick, deleteClick, user}) => {
         <div>
         {blog.url} <br/>
         {blog.likes + ` likes`} <button onClick={likeClick(blog.id)}>likes</button><br/>
-        {`Added by ${blog.user===undefined ? 'No user' : blog.user.name}`} <br/>
-        {user === blog.user.name ? 
+        {`Added by ${blog.user.name===undefined ? username : blog.user.name}`} <br/>
+        {username === blog.user.name ? 
         <button onClick={deleteClick(blog.id)}>remove</button>
         : null
         }
