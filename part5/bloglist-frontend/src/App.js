@@ -77,7 +77,7 @@ const FormBlogCreate = ({ handleCreateBlogPost, title, onTitleChange, author, on
   )
 }
 
-const UserBlog = ({ likes, likeClick, message, colorErrorMessage, user, blogs, handleLogOut, handleCreateBlogPost, title, onTitleChange, author, onAuthorChange, url, onUrlChange }) => {
+const UserBlog = ({ likeClick, message, colorErrorMessage, user, blogs, handleLogOut, handleCreateBlogPost, title, onTitleChange, author, onAuthorChange, url, onUrlChange }) => {
   return(
     <div>
       <h2>blogs</h2>
@@ -96,13 +96,13 @@ const UserBlog = ({ likes, likeClick, message, colorErrorMessage, user, blogs, h
           />
       </Togglable>
       {blogs.map(blog => 
-      <Blog key={blog.id} blog={blog} likeClick={likeClick} likes={likes}/> )}
+      <Blog key={blog.id} blog={blog} likeClick={likeClick} /> )}
       </div>
     </div>
   )
 }
 
-const Blog = ({ blog, likeClick, likes }) => {
+const Blog = ({ blog, likeClick }) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -110,7 +110,8 @@ const Blog = ({ blog, likeClick, likes }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  console.log('likes', likes)
+ // console.log('likes', likes=== '')
+  //console.log('bloglikes', blog.likes)
 //console.log('blog', blog.user===undefined ? null : blog.user.name)
   return(
     <div style={blogStyle}>
@@ -118,7 +119,7 @@ const Blog = ({ blog, likeClick, likes }) => {
         <BlogPostTogglable titleLabel={blog.title} authorLabel={blog.author}>
         <div>
         {blog.url} <br/>
-        {((likes === '') ? blog.likes : likes) + ` likes`} <button onClick={likeClick(blog.id)}>likes</button><br/>
+        {blog.likes + ` likes`} <button onClick={likeClick(blog.id)}>likes</button><br/>
         {`Added by ${blog.user===undefined ? 'No user' : blog.user.name}`}
         </div>
         </BlogPostTogglable>
@@ -207,8 +208,8 @@ const App = () => {
  /**************************************When user logged in handle Blog Create *************************************************/
  const handleLikeClick = id => () => {
   //console.log(blogs)
- 
-
+//event.preventDefault()
+  
   const blog = blogs.find(blog => blog.id === id)
   const blogObject = {
     title: blog.title,
@@ -218,16 +219,21 @@ const App = () => {
     user: blog.user
   } 
 
-  console.log(blog)
-  console.log(id)
-
+ // console.log(blog)
+ // console.log(id)
+ // setLikes(() => blogs.find(blog => blog.id === id).likes + 1)
   blogService
     .update(blog.id, blogObject)
     .then(() => {
-      blogs.find(blog => blog.id === id).likes += 1
+      setLikes(blogs.find(blog => blog.id === id).likes += 1)
+
     })
     setBlogs(blogs)
-    setLikes(blogs.find(blog => blog.id === id).likes + 1)
+    //console.log('blog likes', blog.likes + 1)
+   // setLikes(blog.likes + 1  )
+    //console.log('likes', likes==='' ? blog.likes + 1 : likes + 1 )
+    
+    
   
  }
  const handleCreateBlogPost = (event) => {
@@ -276,7 +282,7 @@ const App = () => {
          username={username} password={password}
          onUsernameChange={handleUsername} onPasswordChange={handlePassword} /> 
          
-     : <UserBlog likes={likes} likeClick={handleLikeClick} user={user} blogs={blogs} handleLogOut={handleLogOut}
+     : <UserBlog likeClick={handleLikeClick} user={user} blogs={blogs} handleLogOut={handleLogOut}
          message={errorMessage} colorErrorMessage={colorErrorMessage}
          title={title}
          author={author}
