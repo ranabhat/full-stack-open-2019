@@ -13,16 +13,16 @@ const BlogPostTogglable = (props) => {
   // console.log(props.children.props.children[0])
 
   return (
-    <div>
-      <div style={hideWhenVisible}>
+    <>
+      <div style={hideWhenVisible} className={'hideBlogDetail'}>
         <p onClick={toggleVisibility}>{props.titleLabel} {props.authorLabel}</p>
       </div>
-      <div  style={showWhenVisible}>
-        <p onClick={toggleVisibility}>{props.titleLabel} {props.authorLabel}</p>
+      <div style={showWhenVisible} className='togglableContent'>
+        <p onClick={toggleVisibility} className='paraPressed'>{props.titleLabel} {props.authorLabel}</p>
         {props.children}
         {/* <p onClick={toggleVisibility}>{props.titleLabel} {props.authorLabel}</p> */}
       </div>
-    </div>
+    </>
   )
 }
 
