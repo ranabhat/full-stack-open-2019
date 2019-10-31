@@ -2,152 +2,9 @@ import React, { useState, useEffect } from 'react'
 
 import loginService from './services/login'
 import blogService from './services/blogs'
-import Togglable from './components/Togglable'
-//import BlogPostTogglable from './components/BlogPostTogglable'
-import Blog from './components/Blog'
+import LoginForm from './components/LoginForm'
+import UserBlog from './components/UserBlog'
 
-
-const LoginForm = ({ message, colorErrorMessage, handleLogin, username, password, onUsernameChange, onPasswordChange }) => {
-
-  return(
-    <>
-    <h2>login to the application</h2>
-    <Notification message={message} colorErrorMessage={colorErrorMessage} />
-    <form onSubmit= {handleLogin}>
-      <div>
-              username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={onUsernameChange}
-        />
-      </div>
-      <div>
-            password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={onPasswordChange}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-    </>
-  )
-
-}
-
-const FormBlogCreate = ({ handleCreateBlogPost, title, onTitleChange, author, onAuthorChange, url, onUrlChange  }) => {
-  return (
-    <div>
-      <h2>create new</h2>
-      <form onSubmit= {handleCreateBlogPost}>
-        <div>
-            title
-          <input
-            type="text"
-            value={title}
-            name="Title"
-            onChange={onTitleChange}
-          />
-        </div>
-        <div>
-          author
-          <input
-            type="text"
-            value={author}
-            name="Author"
-            onChange={onAuthorChange}
-          />
-        </div>
-        <div>
-          url
-          <input
-            type="url"
-            value={url}
-            name="Url"
-            onChange={onUrlChange}
-          />
-        </div>
-        <button type="submit">create</button>
-      </form>
-    </div>
-  )
-}
-
-const UserBlog = ({ likeClick, deleteClick, message, colorErrorMessage, user, blogs, handleLogOut, handleCreateBlogPost, title, onTitleChange, author, onAuthorChange, url, onUrlChange }) => {
-  //console.log('userblogs', blogs)
-  /* Sort BlogPost By Number of Likes */
-  const sortBlogsByLikes = blogs.sort((a, b) => a.likes - b.likes)
-  //console.log(sortBlogsByLikes)
-  return(
-    <div>
-      <h2>blogs</h2>
-      <Notification message={message} colorErrorMessage={colorErrorMessage} />
-      <div> <p>{user.name} is logged in
-        <button onClick={handleLogOut}>logout</button></p></div>
-      <div>
-        <Togglable buttonLabel="new note">
-          <FormBlogCreate title={title}
-            author={author}
-            url={url}
-            handleCreateBlogPost={handleCreateBlogPost}
-            onTitleChange={onTitleChange}
-            onAuthorChange={onAuthorChange}
-            onUrlChange={onUrlChange}
-          />
-        </Togglable>
-        {sortBlogsByLikes.map(blog =>
-          <Blog key={blog.id} blog={blog} likeClick={likeClick} username={user.name} deleteClick={deleteClick} /> )}
-      </div>
-    </div>
-  )
-}
-
-// const Blog = ({ blog, likeClick, deleteClick, username }) => {
-//   const blogStyle = {
-//     paddingTop: 10,
-//     paddingLeft: 2,
-//     border: 'solid',
-//     borderWidth: 1,
-//     marginBottom: 5
-//   }
-//   console.log(username)
-//   // console.log('likes', likes=== '')
-//   //console.log('bloglikes', blog.likes)
-//   //console.log('blog', blog.user===undefined ? null : blog.user.name)
-//   return(
-//     <div style={blogStyle}>
-//       {/* <div onClick={() => console.log('clicked')}> */}
-//       <BlogPostTogglable titleLabel={blog.title} authorLabel={blog.author}>
-//         <div>
-//           {blog.url} <br/>
-//           {blog.likes + ' likes'} <button onClick={likeClick(blog.id)}>likes</button><br/>
-//           {`Added by ${blog.user.name===undefined ? username : blog.user.name}`} <br/>
-//           {username === blog.user.name ?
-//             <button onClick={deleteClick(blog.id)}>remove</button>
-//             : null
-//           }
-//         </div>
-//       </BlogPostTogglable>
-
-//     </div>
-//     // </div>
-//   )
-// }
-
-const Notification = ({ message, colorErrorMessage }) => {
-  if (message === null) {
-    return null
-  }
-  return (
-    <div className={colorErrorMessage}>
-      {message}
-    </div>
-  )
-}
 const App = () => {
   const [blogs, setBlogs] = useState([])
 
@@ -183,7 +40,7 @@ const App = () => {
     event.preventDefault()
     try {
       const user = await loginService.login({ username, password })
-      window.localStorage.setItem('loggedNoteappUser', JSON.stringify(user))
+      window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
       console.log('logging in with', username, password)
@@ -241,15 +98,11 @@ const App = () => {
     //console.log('blog likes', blog.likes + 1)
     // setLikes(blog.likes + 1  )
     //console.log('likes', likes==='' ? blog.likes + 1 : likes + 1 )
-
-
-
   }
 
 
   const handleCreateBlogPost = (event) => {
     event.preventDefault() // prevents the default action of submitting a form
-
     const blogObject = {
       title: title,
       author: author,
