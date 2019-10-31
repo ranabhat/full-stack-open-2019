@@ -4,19 +4,27 @@ import loginService from './services/login'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
 import UserBlog from './components/UserBlog'
+import { useField } from './hooks'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
 
   const [errorMessage, setErrorMessage] = useState(null)
   const [colorErrorMessage, setColorErrorMessage] = useState('')
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  // const [username, setUsername] = useState('')
+  // const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  const [title, setTitle] = useState('')
-  const [author, setAuthor] = useState('')
-  const [url, setUrl] = useState('')
+  // const [title, setTitle] = useState('')
+  //const [author, setAuthor] = useState('')
+  //const [url, setUrl] = useState('')
   const [likes, setLikes] = useState('')
+  const usernameState = useField('text')
+  const passwordState = useField('password')
+  const titleState = useField('text')
+  const authorState = useField('text')
+  const urlState = useField('url')
+
+  //console.log(username1)
 
   /**************************************Fetching data from server *************************************************/
   useEffect(() => {
@@ -39,35 +47,43 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
+      const username = usernameState.value
+      const password = passwordState.value
       const user = await loginService.login({ username, password })
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
       console.log('logging in with', username, password)
-      setUsername('')
-      setPassword('')
+      // setUsername('')
+      // setPassword('')
+      usernameState.reset()
+      passwordState.reset()
     } catch (exception) {
       setErrorMessage('wrong username or password')
       setColorErrorMessage('errorRed')
-      setUsername('')
-      setPassword('')
+      // setUsername('')
+      //  setPassword('')
+      usernameState.reset()
+      passwordState.reset()
       setTimeout(() => {
         setErrorMessage(null)
       }, 5000)
     }
   }
-  const handleUsername = (event) => {
-    setUsername(event.target.value)
-  }
-  const handlePassword = (event) => {
-    setPassword(event.target.value)
-  }
+  // const handleUsername = (event) => {
+  //   setUsername(event.target.value)
+  // }
+  // const handlePassword = (event) => {
+  //   setPassword(event.target.value)
+  // }
 
   const handleLogOut = () => {
     window.localStorage.clear()
     setUser(null)
-    setUsername('')
-    setPassword('')
+    // setUsername('')
+    //  setPassword('')
+    usernameState.reset()
+    passwordState.reset()
   }
   /*************************************************************************************************************/
 
@@ -103,6 +119,9 @@ const App = () => {
 
   const handleCreateBlogPost = (event) => {
     event.preventDefault() // prevents the default action of submitting a form
+    const title = titleState.value
+    const author = authorState.value
+    const url = urlState.value
     const blogObject = {
       title: title,
       author: author,
@@ -117,9 +136,12 @@ const App = () => {
         )
         setColorErrorMessage('error')
         setBlogs(blogs.concat(returnedBlog))
-        setTitle('')
-        setAuthor('')
-        setUrl('')
+        // setTitle('')
+        // setAuthor('')
+        // setUrl('')
+        titleState.reset()
+        authorState.reset()
+        urlState.reset()
         setTimeout(() => {
           setErrorMessage(null)
         }, 5000)
@@ -141,36 +163,37 @@ const App = () => {
       })
   }
 
-  const handleTitle = (event) => {
-    setTitle(event.target.value)
-  }
-  const handleAuthor = (event) => {
-    setAuthor(event.target.value)
-  }
-  const handleUrl = (event) => {
-    setUrl(event.target.value)
-  }
+  // const handleTitle = (event) => {
+  //   setTitle(event.target.value)
+  // }
+  // const handleAuthor = (event) => {
+  //   setAuthor(event.target.value)
+  // }
+  // const handleUrl = (event) => {
+  //   setUrl(event.target.value)
+  // }
   /*************************************************************************************************************/
   console.log('app toimi')
   return(
     <div>
       {/* <h2>Log in to application</h2> */}
       {user === null
-        ? <LoginForm message={errorMessage} colorErrorMessage={colorErrorMessage} handleLogin={handleLogin}
-          username={username} password={password}
-          onUsernameChange={handleUsername} onPasswordChange={handlePassword} />
+        ? <LoginForm username={usernameState} password={passwordState} message={errorMessage} colorErrorMessage={colorErrorMessage} handleLogin={handleLogin}
+          // username={username} password={password}
+          // onUsernameChange={handleUsername} onPasswordChange={handlePassword}
+        />
 
         : <UserBlog likes={likes}
           deleteClick={handleDeleteBlogPost} likeClick={handleLikeClick}
           user={user} blogs={blogs} handleLogOut={handleLogOut}
           message={errorMessage} colorErrorMessage={colorErrorMessage}
-          title={title}
-          author={author}
-          url={url}
+          title={titleState}
+          author={authorState}
+          url={urlState}
           handleCreateBlogPost={handleCreateBlogPost}
-          onTitleChange={handleTitle}
-          onAuthorChange={handleAuthor}
-          onUrlChange={handleUrl}
+          // onTitleChange={handleTitle}
+          // onAuthorChange={handleAuthor}
+          // onUrlChange={handleUrl}
         />
       }
     </div>

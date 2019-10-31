@@ -1,8 +1,8 @@
 import React from 'react'
 import Notification from './Notification'
 
-const LoginForm = ({ message, colorErrorMessage, handleLogin, username, password, onUsernameChange, onPasswordChange }) => {
-
+const LoginForm = ({  message, colorErrorMessage, handleLogin, username, password }) => {
+  //console.log(username)
   return(
       <>
       <h2>login to the application</h2>
@@ -11,20 +11,20 @@ const LoginForm = ({ message, colorErrorMessage, handleLogin, username, password
         <div>
                 username
           <input
-            type="text"
-            value={username}
+            type={username.type}
+            value={username.value}
             name="Username"
-            onChange={onUsernameChange}
+            onChange={username.onChange}
             className='username'
           />
         </div>
         <div>
               password
           <input
-            type="password"
-            value={password}
+            type={password.type}
+            value={password.value}
             name="Password"
-            onChange={onPasswordChange}
+            onChange={password.onChange}
             className='password'
           />
         </div>

@@ -8,28 +8,28 @@ const FormBlogCreate = ({ handleCreateBlogPost, title, onTitleChange, author, on
         <div>
               title
           <input
-            type="text"
-            value={title}
+            type={title.type}
+            value={title.value}
             name="Title"
-            onChange={onTitleChange}
+            onChange={title.onChange}
           />
         </div>
         <div>
             author
           <input
-            type="text"
-            value={author}
+            type={author.type}
+            value={author.value}
             name="Author"
-            onChange={onAuthorChange}
+            onChange={author.onChange}
           />
         </div>
         <div>
             url
           <input
-            type="url"
-            value={url}
+            type={url.type}
+            value={url.value}
             name="Url"
-            onChange={onUrlChange}
+            onChange={url.onChange}
           />
         </div>
         <button type="submit">create</button>
