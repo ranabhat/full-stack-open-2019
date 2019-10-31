@@ -1,6 +1,6 @@
 import React from 'react'
 
-const FormBlogCreate = ({ handleCreateBlogPost, title, onTitleChange, author, onAuthorChange, url, onUrlChange  }) => {
+const FormBlogCreate = ({ handleCreateBlogPost, title, author, url }) => {
   return (
     <div>
       <h2>create new</h2>
