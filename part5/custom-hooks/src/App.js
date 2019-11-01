@@ -95,15 +95,9 @@ const App = () => {
 
       <h2>persons</h2>
       <form onSubmit={handlePersonSubmit}>
-        name <input //{...name}
-                 type={name.type}
-                 value={name.value}
-                 onChange={name.onChange}
+        name <input {...name}
                 /> <br/>
-        number <input //{...number.value}
-                 type={number.type}
-                 value={number.value}
-                 onChange={number.onChange}
+        number <input {...number}
                 />
         <button>create</button>
       </form>
