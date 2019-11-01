@@ -141,17 +141,19 @@ const App = () => {
   }
 
   const handleDeleteBlogPost = id => () => {
-
     const findBlogToDelete = blogs.find(blog => blog.id === id)
-    blogService
-      .deletes(findBlogToDelete.id, findBlogToDelete)
-      .then(() => {
-        window.confirm(`remove blog ${findBlogToDelete.title} by ${findBlogToDelete.author} `)
-        setBlogs(blogs.filter(blog => blog.id !== findBlogToDelete.id))
-      })
-      .catch(error => {
-        console.log(error.message)
-      })
+    if( window.confirm(`remove blog ${findBlogToDelete.title} by ${findBlogToDelete.author} `)) {
+
+      blogService
+        .deletes(findBlogToDelete.id, findBlogToDelete)
+        .then(() => {
+          //window.confirm(`remove blog ${findBlogToDelete.title} by ${findBlogToDelete.author} `)
+          setBlogs(blogs.filter(blog => blog.id !== findBlogToDelete.id))
+        })
+        .catch(error => {
+          console.log(error.message)
+        })
+    }
   }
 
   /*************************************************************************************************************/
