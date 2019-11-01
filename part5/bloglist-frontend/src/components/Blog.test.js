@@ -65,24 +65,3 @@ describe('<Blog />', () => {
   })
 
 })
-// test('renders the title and author name initially', () => {
-//   const blog = {
-//     title: 'Mount Everest King of the Mountains',
-//     author: 'Shiva Shankar',
-//     url: 'https://example.com',
-//     likes: 3,
-//     id: '5defghjutfrr',
-//     user: {
-//       name: 'Paribesh'
-//     }
-//   }
-
-//   const mockHandler = jest.fn()
-
-//   const component = render(
-//     <Blog blog={blog} likeClick={mockHandler} />
-
-//   )
-
-//   component.debug()
-// })

@@ -1,37 +1,10 @@
 import React from 'react'
-import { render, waitForElement, fireEvent } from '@testing-library/react'
-//import { prettyDOM } from '@testing-library/dom'
+import { render, waitForElement } from '@testing-library/react'
 jest.mock('./services/blogs')
 import App from './App'
-import LoginForm from './components/LoginForm'
 import UserBlog from './components/UserBlog'
-//import UserBlog from './components/UserBlog'
-
-const Wrapper = (props) => {
-
-  const onChangeUser = (event) => {
-    props.state.value = event.target.value
-
-
-  }
-  const onChangePassword = (event) => {
-    props.state1.value = event.target.value
-
-  }
-  return (
-    <LoginForm
-      username={props.state.value}
-      password={props.state1.value}
-      onUsernameChange={onChangeUser}
-      onPasswordChange={onChangePassword}
-      handleLogin={props.onSubmit}
-    />
-  )
-}
 
 const WrapperBlog = (props) => {
-
-
   return (
     <UserBlog
       blogs={props.blogs}
@@ -41,7 +14,6 @@ const WrapperBlog = (props) => {
   )
 }
 
-// test()
 
 describe('<App />', () => {
   test('if no user logged, blogs are not rendered', async () => {
@@ -69,13 +41,9 @@ describe('<App />', () => {
     const formDiv = component.getByText('username')
     expect(formDiv).toHaveStyle('display: block')
   })
+
   test('if user is null, not any blogs are rendered', async () => {
     const user = null
-    // const user = {
-    //   username: 'tester',
-    //   token: '1231231214',
-    //   name: 'Donald Tester'
-    // }
     localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
     // console.log(localStorage.getItem('loggedBlogAppUser') === 'null')
     if (localStorage.getItem('loggedBlogAppUser') === 'null') {
@@ -103,54 +71,6 @@ describe('<App />', () => {
       const formDiv = component.getByText('username')
       expect(formDiv).toHaveStyle('display: block')
     }
-  })
-
-  test('<LoginForm /> updates parent state and calls onSubmit', async () => {
-    const user = {
-      username: 'tester',
-      token: '1231231214',
-      name: 'Donald Tester'
-    }
-    jest.spyOn(localStorage, 'setItem')
-    localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
-
-    const onSubmit = jest.fn()
-    const state = {
-      value: ''
-    }
-    const state1 = {
-      value: ''
-    }
-
-    const component = render(
-      <Wrapper onSubmit={onSubmit} state={state} state1={state1} />
-    )
-
-
-    const inputUsername =  component.container.querySelector('.username')
-    const inputPassword = component.container.querySelector('.password')
-    const form = component.container.querySelector('form')
-
-    fireEvent.change(inputUsername, { target: { value: 'bronepeace' } })
-    fireEvent.change(inputPassword, { target: { value: 'loveislife' } })
-    fireEvent.submit(form)
-
-    expect(inputUsername).toBeDefined()
-    expect(inputPassword).toBeDefined()
-    expect(form).toBeDefined()
-    expect(onSubmit.mock.calls.length).toBe(1)
-    expect(state.value).toBe('bronepeace')
-    expect(state1.value).toBe('loveislife')
-    console.log((JSON.parse(localStorage.getItem('loggedBlogAppUser')).token))
-    expect((JSON.parse(localStorage.getItem('loggedBlogAppUser')).token)).toEqual('1231231214')
-
-    // assertions as usual:
-    expect(localStorage.setItem).toHaveBeenCalled()
-    //expect(component.container).toHaveTextContent('tester')
-
-
-
-
   })
 
   test('renders all blogs when login successfully', async () => {
@@ -203,8 +123,6 @@ describe('<App />', () => {
       expect(component.container).not.toHaveTextContent(
         'login'
       )
-
-
       //component.debug()
     }
   })
