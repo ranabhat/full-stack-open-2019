@@ -11,12 +11,7 @@ const App = () => {
 
   const [errorMessage, setErrorMessage] = useState(null)
   const [colorErrorMessage, setColorErrorMessage] = useState('')
-  // const [username, setUsername] = useState('')
-  // const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
-  // const [title, setTitle] = useState('')
-  //const [author, setAuthor] = useState('')
-  //const [url, setUrl] = useState('')
   const [likes, setLikes] = useState('')
   const usernameState = useField('text')
   const passwordState = useField('password')
@@ -53,16 +48,17 @@ const App = () => {
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      console.log('logging in with', username, password)
-      // setUsername('')
-      // setPassword('')
+      //console.log('logging in with', username, password)
+      usernameState.reset = () => usernameState.onChange('')
+      passwordState.reset = () => passwordState.onChange('')
+      //content.reset()
       usernameState.reset()
       passwordState.reset()
     } catch (exception) {
       setErrorMessage('wrong username or password')
       setColorErrorMessage('errorRed')
-      // setUsername('')
-      //  setPassword('')
+      usernameState.reset = () => usernameState.onChange('')
+      passwordState.reset = () => passwordState.onChange('')
       usernameState.reset()
       passwordState.reset()
       setTimeout(() => {
@@ -70,18 +66,12 @@ const App = () => {
       }, 5000)
     }
   }
-  // const handleUsername = (event) => {
-  //   setUsername(event.target.value)
-  // }
-  // const handlePassword = (event) => {
-  //   setPassword(event.target.value)
-  // }
 
   const handleLogOut = () => {
     window.localStorage.clear()
     setUser(null)
-    // setUsername('')
-    //  setPassword('')
+    usernameState.reset = () => usernameState.onChange('')
+    passwordState.reset = () => passwordState.onChange('')
     usernameState.reset()
     passwordState.reset()
   }
@@ -136,9 +126,10 @@ const App = () => {
         )
         setColorErrorMessage('error')
         setBlogs(blogs.concat(returnedBlog))
-        // setTitle('')
-        // setAuthor('')
-        // setUrl('')
+        titleState.reset = () => titleState.onChange('')
+        authorState.reset = () => authorState.onChange('')
+        urlState.reset = () => urlState.onChange('')
+        //content.reset()
         titleState.reset()
         authorState.reset()
         urlState.reset()
@@ -163,15 +154,6 @@ const App = () => {
       })
   }
 
-  // const handleTitle = (event) => {
-  //   setTitle(event.target.value)
-  // }
-  // const handleAuthor = (event) => {
-  //   setAuthor(event.target.value)
-  // }
-  // const handleUrl = (event) => {
-  //   setUrl(event.target.value)
-  // }
   /*************************************************************************************************************/
   console.log('app toimi')
   return(

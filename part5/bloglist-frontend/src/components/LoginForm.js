@@ -10,21 +10,21 @@ const LoginForm = ({  message, colorErrorMessage, handleLogin, username, passwor
       <form onSubmit= {handleLogin} className='form'>
         <div>
                 username
-          <input
-            type={username.type}
-            value={username.value}
+          <input {...username}
+            // type={username.type}
+            // value={username.value}
             name="Username"
-            onChange={username.onChange}
+            // onChange={username.onChange}
             className='username'
           />
         </div>
         <div>
               password
-          <input
-            type={password.type}
-            value={password.value}
+          <input {...password}
+            // type={password.type}
+            // value={password.value}
             name="Password"
-            onChange={password.onChange}
+            // onChange={password.onChange}
             className='password'
           />
         </div>
