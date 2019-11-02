@@ -7,6 +7,10 @@
     {
       "content": "best feature ever <3",
       "id": 2
+    },
+    {
+      "content": "Let's get hooked ",
+      "id": 3
     }
   ],
   "persons": [
@@ -19,6 +23,11 @@
       "name": "Terho",
       "number": "040-323-222",
       "id": 2
+    },
+    {
+      "name": "Paribesh",
+      "number": "043-334568",
+      "id": 3
     }
   ]
 }
