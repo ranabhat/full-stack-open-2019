@@ -14,7 +14,6 @@ const WrapperBlog = (props) => {
   )
 }
 
-
 describe('<App />', () => {
   test('if no user logged, blogs are not rendered', async () => {
     const component = render(
@@ -42,11 +41,11 @@ describe('<App />', () => {
     expect(formDiv).toHaveStyle('display: block')
   })
 
-  test('if user is null, not any blogs are rendered', async () => {
-    const user = null
+  test('if user is undefined, not any blogs are rendered', async () => {
+    const user = undefined
     localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
-    // console.log(localStorage.getItem('loggedBlogAppUser') === 'null')
-    if (localStorage.getItem('loggedBlogAppUser') === 'null') {
+    //console.log(localStorage.getItem('loggedBlogAppUser'))
+    if (!localStorage.getItem('loggedBlogAppUser')) {
       const component = render(
         <App  />
       )
@@ -55,7 +54,7 @@ describe('<App />', () => {
       await waitForElement(
         () => component.getByText('login')
       )
-      //  component.debug()
+      // component.debug()
       expect(component.container).toHaveTextContent(
         'login to the application'
       )

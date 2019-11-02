@@ -85,9 +85,6 @@ const App = () => {
       <h2>notes</h2>
       <form onSubmit={handleNoteSubmit}>
         <input {...content} 
-          // type={content.type}
-          // value={content.value}
-          // onChange={content.onChange}
         />
         <button>create</button>
       </form>

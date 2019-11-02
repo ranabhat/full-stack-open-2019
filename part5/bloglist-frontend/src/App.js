@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-
 import loginService from './services/login'
 import blogService from './services/blogs'
 import LoginForm from './components/LoginForm'
@@ -11,15 +10,15 @@ const App = () => {
 
   const [errorMessage, setErrorMessage] = useState(null)
   const [colorErrorMessage, setColorErrorMessage] = useState('')
+
   const [user, setUser] = useState(null)
   const [likes, setLikes] = useState('')
+
   const usernameState = useField('text')
   const passwordState = useField('password')
   const titleState = useField('text')
   const authorState = useField('text')
   const urlState = useField('url')
-
-  //console.log(username1)
 
   /**************************************Fetching data from server *************************************************/
   useEffect(() => {
@@ -30,7 +29,7 @@ const App = () => {
   }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedNoteappUser')
+    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
       setUser(user)
@@ -42,9 +41,7 @@ const App = () => {
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
-      const username = usernameState.value
-      const password = passwordState.value
-      const user = await loginService.login({ username, password })
+      const user = await loginService.login({ username: usernameState.value , password: passwordState.value })
       window.localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
@@ -79,9 +76,6 @@ const App = () => {
 
   /**************************************When user logged in handle Blog Create *************************************************/
   const handleLikeClick = id => () => {
-  //console.log(blogs)
-    //event.preventDefault()
-
     const blog = blogs.find(blog => blog.id === id)
     const blogObject = {
       title: blog.title,
@@ -90,10 +84,6 @@ const App = () => {
       url: blog.url,
       user: blog.user
     }
-
-    // console.log(blog)
-    // console.log(id)
-    // setLikes(() => blogs.find(blog => blog.id === id).likes + 1)
     blogService
       .update(blog.id, blogObject)
       .then(() => {
@@ -101,9 +91,6 @@ const App = () => {
 
       })
     setBlogs(blogs)
-    //console.log('blog likes', blog.likes + 1)
-    // setLikes(blog.likes + 1  )
-    //console.log('likes', likes==='' ? blog.likes + 1 : likes + 1 )
   }
 
 
@@ -157,14 +144,16 @@ const App = () => {
   }
 
   /*************************************************************************************************************/
-  console.log('app toimi')
+  //console.log('app toimi')
   return(
     <div>
       {/* <h2>Log in to application</h2> */}
       {user === null
-        ? <LoginForm username={usernameState} password={passwordState} message={errorMessage} colorErrorMessage={colorErrorMessage} handleLogin={handleLogin}
-          // username={username} password={password}
-          // onUsernameChange={handleUsername} onPasswordChange={handlePassword}
+        ? <LoginForm username={usernameState}
+          password={passwordState}
+          message={errorMessage}
+          colorErrorMessage={colorErrorMessage}
+          handleLogin={handleLogin}
         />
 
         : <UserBlog likes={likes}
@@ -175,9 +164,6 @@ const App = () => {
           author={authorState}
           url={urlState}
           handleCreateBlogPost={handleCreateBlogPost}
-          // onTitleChange={handleTitle}
-          // onAuthorChange={handleAuthor}
-          // onUrlChange={handleUrl}
         />
       }
     </div>

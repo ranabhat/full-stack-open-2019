@@ -9,10 +9,7 @@ const Blog = ({ blog, likeClick, deleteClick, username }) => {
     borderWidth: 1,
     marginBottom: 5
   }
-  //console.log(username)
-  // console.log('likes', likes=== '')
-  //console.log('bloglikes', blog.likes)
-  //console.log('blog', blog.user===undefined ? null : blog.user.name)
+
   return(
     <div style={blogStyle} >
       {/* <div onClick={() => console.log('clicked')}> */}
@@ -29,7 +26,6 @@ const Blog = ({ blog, likeClick, deleteClick, username }) => {
       </BlogPostTogglable>
 
     </div>
-    // </div>
   )
 }
 

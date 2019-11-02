@@ -11,20 +11,14 @@ const LoginForm = ({  message, colorErrorMessage, handleLogin, username, passwor
         <div>
                 username
           <input {...username}
-            // type={username.type}
-            // value={username.value}
             name="Username"
-            // onChange={username.onChange}
             className='username'
           />
         </div>
         <div>
               password
           <input {...password}
-            // type={password.type}
-            // value={password.value}
             name="Password"
-            // onChange={password.onChange}
             className='password'
           />
         </div>
