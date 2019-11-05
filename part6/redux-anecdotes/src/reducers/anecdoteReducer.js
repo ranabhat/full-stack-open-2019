@@ -55,4 +55,6 @@ export const voteForAnecdote = (id) => {
     data: { id }
   }
 }
+
+
 export default reducer
