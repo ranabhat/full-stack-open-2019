@@ -1,6 +1,7 @@
-  
-  const notificationReducer = (state = null , action) => {
-    //console.log('state now: ', state)
+  const initialState = Object.assign({},{text:null, votedOrCreated: ''})
+  //console.log('vvvv',initialState.text)
+  const notificationReducer = (state = initialState, action) => {
+    console.log('state now: ', state)
     console.log('action notification', action)
     // const bemove = Object.assign({}, action, {
     //     notify: null
@@ -11,13 +12,12 @@
                 // const id = action.data.id
                 // const anecdoteToVote = state.find(n => n.id === id)
                 // return (anecdoteToVote !== false ? anecdoteToVote.content : null)
-                return action.notify
+                return Object.assign({}, action).notify
                 
         case 'REMOVE_NOTIFICATION':
-            return Object.assign({}, action, {
-                notify: null}).notify
+            return initialState
         default:
-            return state
+            return initialState
     }
 }
 export const displayNotificationFor = (notify) => {

@@ -18,9 +18,9 @@ const AnecdoteList = ({ store }) => {
                 anecdote={anecdote}
                 voteClick={() => {
                     store.dispatch(voteForAnecdote(anecdote.id))
-                    store.dispatch(displayNotificationFor(anecdote.content))
+                    store.dispatch(displayNotificationFor({text:anecdote.content, votedOrCreated:'you Voted'}))
                     setTimeout(()=> {
-                    store.dispatch(removeNotificationFor(anecdote.content))
+                    store.dispatch(removeNotificationFor({text:anecdote.content, votedOrCreated:'you Voted'}))
                     }, 5000)
                
                 }

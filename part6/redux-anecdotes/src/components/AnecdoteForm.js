@@ -11,9 +11,9 @@ const AnecdoteForm = (props) => {
         event.target.anecdote.value = ''
         props.store.dispatch(
             createAnecdote(content))
-        props.store.dispatch(displayNotificationFor(content))
+        props.store.dispatch(displayNotificationFor({text:content, votedOrCreated:'you created'}))
         setTimeout(()=> {
-          props.store.dispatch(removeNotificationFor(content))
+          props.store.dispatch(removeNotificationFor({text:content, votedOrCreated:'you created'}))
           }, 5000)
     
     
