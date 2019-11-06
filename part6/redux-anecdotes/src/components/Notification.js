@@ -1,7 +1,7 @@
 import React from 'react'
 
 const Notification = ({ store }) => {
-  console.log('notification store get', store.getState().notify===null ? 'one null' : Object.values(store.getState().notify)[1])
+ // console.log('notification store get', store.getState().notify===null ? 'one null' : Object.values(store.getState().notify)[1])
   const style = {
     border: 'solid',
     padding: 10,

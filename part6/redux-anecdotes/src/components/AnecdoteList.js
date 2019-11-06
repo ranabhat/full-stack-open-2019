@@ -7,7 +7,21 @@ import { removeNotificationFor } from '../reducers/notificationReducer'
 
 
 const AnecdoteList = ({ store }) => {
-    const sortAnecdoteByVotes = store.getState().anecdotes.sort((a, b) => {
+    const { anecdotes, filter } = store.getState()
+    //console.log('anecdotes', anecdotes)
+    //console.log('filter', filter)
+    const anecdotesToShow = () => {
+        if ( filter === '' ) {
+            return anecdotes
+        }
+  
+    else if (filter !== '') {
+        return  anecdotes.filter(r => r.content.toLowerCase().indexOf(filter) !== -1)
+
+    }
+}
+   // console.log('anecdotesToShow', anecdotesToShow())
+    const sortAnecdoteByVotes = anecdotesToShow().sort((a, b) => {
         return b.votes - a.votes
     })
     return (

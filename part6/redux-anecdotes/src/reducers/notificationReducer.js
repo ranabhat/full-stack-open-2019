@@ -1,8 +1,8 @@
   const initialState = Object.assign({},{text:null, votedOrCreated: ''})
   //console.log('vvvv',initialState.text)
   const notificationReducer = (state = initialState, action) => {
-    console.log('state now: ', state)
-    console.log('action notification', action)
+   // console.log('state now: ', state)
+   // console.log('action notification', action)
     // const bemove = Object.assign({}, action, {
     //     notify: null
     // })
