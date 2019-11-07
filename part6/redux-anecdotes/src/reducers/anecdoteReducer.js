@@ -68,11 +68,26 @@ export const createAnecdote = content => {
 }
 
 export const voteForAnecdote = (id) => {
-  return {
-    type: 'VOTE',
-    data: { id }
+  return async dispatch => {
+    const anecdotes = await anecdoteService.getAll()
+    const anecdoteToVote = anecdotes.find(n => n.id === id)
+    const newAnecdoteContent = {
+      content: anecdoteToVote.content,
+      id: anecdoteToVote.id,
+      votes: anecdoteToVote.votes + 1
+    }
+    const updateAnecdote = await anecdoteService.updateVotes(id, newAnecdoteContent)
+    console.log('update anecdote', updateAnecdote)
+    dispatch({
+      type: 'VOTE',
+     data: { id }
+    })
   }
+//   return {
+//     type: 'VOTE',
+//     data: { id }
+//   }
+// }
 }
-
 
 export default anecdoteReducer
