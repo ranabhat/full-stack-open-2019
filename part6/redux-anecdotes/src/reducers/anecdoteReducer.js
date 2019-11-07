@@ -18,6 +18,7 @@
 // }
 
 // const initialState = anecdotesAtStart.map(asObject)
+import anecdoteService from '../services/anecdotes'
 
 const anecdoteReducer = (state = [], action) => {
  // console.log('state now: ', state)
@@ -40,17 +41,24 @@ const anecdoteReducer = (state = [], action) => {
 }
 }
 
-export const initializeAnecdotes = (anecdotes) => {
-  return {
-    type: 'INIT_ANECDOTES',
-    data: anecdotes,
+export const initializeAnecdotes = () => {
+  return async dispatch => {
+    const anecdotes = await anecdoteService.getAll()
+    dispatch( {
+      type: 'INIT_ANECDOTES',
+      data: anecdotes,
+    })
   }
+ 
 }
 
-export const createAnecdote = (data) => {
-  return {
-    type: 'NEW_ANECDOTE',
-    data,
+export const createAnecdote = content => {
+  return async dispatch => {
+    const newAnecdote = await anecdoteService.createNew(content)
+    dispatch({
+      type: 'NEW_ANECDOTE',
+      data: newAnecdote,
+  })
     // data: {
     //   content,
     //   id: getId(),
