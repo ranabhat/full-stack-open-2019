@@ -2,6 +2,8 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 const Notification = (props) => {
+  console.log('notification props', Object.values(props.notify)[1])
+  console.log('test object notification', Object.values(props.notify)[0]=== null)
  // console.log('notification store get', store.getState().notify===null ? 'one null' : Object.values(store.getState().notify)[1])
   const style = {
     border: 'solid',
