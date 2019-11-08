@@ -1,20 +1,11 @@
   const initialState = Object.assign({},{text:null, votedOrCreated: ''})
-  //console.log('vvvv',initialState.text)
+
   const notificationReducer = (state = initialState, action) => {
    // console.log('state now: ', state)
-    console.log('action notification', action)
-    // const bemove = Object.assign({}, action, {
-    //     notify: null
-    // })
-    // console.log('bemove',bemove)
+   // console.log('action notification', action)
     switch(action.type) {
         case 'SET_NOTIFICATION':
-                // const id = action.data.id
-                // const anecdoteToVote = state.find(n => n.id === id)
-                // return (anecdoteToVote !== false ? anecdoteToVote.content : null)
-               // console.log('set noti', Object.assign({}, action).notify)
-                return Object.assign({}, action).notify
-                
+                return Object.assign({}, action).notify        
         case 'REMOVE_NOTIFICATION':
             return initialState
         default:
@@ -38,23 +29,8 @@ export const displayNotificationFor = (notify, time) => {
       }
     )
     
- }, time)
+ }, time*1000)
   }}
 
-
-// export const removeNotificationFor = (notify) => {
-//   return dispatch => {
-//   setTimeout(() => {
-//     dispatch(
-//       {
-//       type: 'REMOVE_NOTIFICATION',
-//       notify,
-//       }
-//     )
-    
-//  }, 5000)
-// }
-// }
-  
 
 export default notificationReducer

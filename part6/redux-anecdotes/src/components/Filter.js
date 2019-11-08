@@ -2,12 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { filterChange } from '../reducers/filterReducer'
 
-const Filter = (props) => {
-   // console.log('filter props',props.store.getState())   
+const Filter = (props) => {   
     const handleChange = (event) => {
         // input field value is in variable event.target.value
         event.preventDefault()
-       //console.log('event', event.target.value)
        const filterValue = event.target.value
        //console.log('event', filterValue)
        props.filterChange(filterValue)
@@ -21,6 +19,5 @@ const Filter = (props) => {
         </div>
     )
 }
-
 
 export default connect(null, { filterChange })(Filter)
