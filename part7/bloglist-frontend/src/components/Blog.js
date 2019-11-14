@@ -1,11 +1,17 @@
 import React from 'react'
-import BlogPostTogglable from './BlogPostTogglable'
+import {
+  //  BrowserRouter as Router,
+  //  Route,  Redirect,
+  Link,
+  withRouter
+} from 'react-router-dom'
+//import BlogPostTogglable from './BlogPostTogglable'
 import { deleteBlog } from '../reducers/blogReducer'
 import { likeBlog } from '../reducers/blogReducer'
 import { displayNotificationFor } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 
-const Blog = (props) => {
+let Blog = (props) => {
   const blogStyle = {
     paddingTop: 10,
     paddingLeft: 2,
@@ -16,37 +22,40 @@ const Blog = (props) => {
 
   //console.log('propsblog',[props.blog])
 
-  const handleDeleteBlogPost = id => async() => {
-    const findBlogToDelete = [props.blog].find(blog => blog.id === id)
-    if( window.confirm(`remove blog ${findBlogToDelete.title} by ${findBlogToDelete.author} `)) {
+  // const handleDeleteBlogPost = id => async() => {
+  //   const findBlogToDelete = [props.blog].find(blog => blog.id === id)
+  //   if( window.confirm(`remove blog ${findBlogToDelete.title} by ${findBlogToDelete.author} `)) {
 
-      props.deleteBlog(findBlogToDelete.id)
-    }
-  }
+  //     props.deleteBlog(findBlogToDelete.id)
+  //   }
+  // }
 
-  const handleLikeClick = id => async() => {
-    //console.log('handlelike id', id)
-    console.log('props handle like', [props.blog])
-    const findBlogToLike = [props.blog].find(blog => blog.id === id)
-    console.log('findblogtolike', findBlogToLike)
-    props.likeBlog(findBlogToLike.id)
-    props.displayNotificationFor(`you voted ${findBlogToLike.title}` , 10)
-  }
+  // const handleLikeClick = id => async() => {
+  //   //console.log('handlelike id', id)
+  //   console.log('props handle like', [props.blog])
+  //   const findBlogToLike = [props.blog].find(blog => blog.id === id)
+  //   console.log('findblogtolike', findBlogToLike)
+  //   props.likeBlog(findBlogToLike.id)
+  //   props.displayNotificationFor(`you voted ${findBlogToLike.title}` , 10)
+  // }
   console.log('campare for delete', props.user.name === props.blog.user.name)
   return(
     <div style={blogStyle} >
       {/* <div onClick={() => console.log('clicked')}> */}
-      <BlogPostTogglable titleLabel={props.blog.title} authorLabel={props.blog.author}>
+      {/* <BlogPostTogglable titleLabel={props.blog.title} authorLabel={props.blog.author}>
         <div className="allBlogContent">
           {props.blog.url} <br/>
           {props.blog.likes + ' likes'} <button onClick={handleLikeClick(props.blog.id)}>likes</button><br/>
-          {`Added by ${props.blog.user.name===undefined ? props.username : props.blog.user.name}`} <br/>
+          {`Added by ${props.blog.user.name===undefined ? props.user.name : props.blog.user.name}`} <br/>
           {props.user.name === props.blog.user.name ?
             <button onClick={handleDeleteBlogPost(props.blog.id)}>remove</button>
             : null
           }
         </div>
-      </BlogPostTogglable>
+      </BlogPostTogglable> */}
+      <p>
+        <Link to={`/blogs/${props.blog.id}`}>{props.blog.title} {props.blog.author}</Link>
+      </p>
 
     </div>
   )
@@ -62,6 +71,7 @@ const mapStateToProps = (state) => {
 // }
 // console.log('nnnn',mapDispatchToProps)
 //export default Blog
+Blog = withRouter(Blog)
 export default connect(mapStateToProps, { likeBlog, deleteBlog, displayNotificationFor })(Blog)
 
 

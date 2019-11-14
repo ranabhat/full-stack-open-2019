@@ -22,8 +22,8 @@ const blogReducer = (state = [], action) => {
     return action.data
   case 'INIT_BLOGS':
     return action.data
-  case 'SET_TOKEN':
-    return state
+  // case 'SET_TOKEN':
+  //   return state
   default:
     return state
   }
@@ -83,14 +83,14 @@ export const likeBlog = (id) => {
   }
 }
 
-export const setTokenForUser = token => {
-  return  dispatch => {
-    blogService.setToken(token)
-    dispatch({
-      type: 'SET_TOKEN',
-    })
-  }
-}
+// export const setTokenForUser = token => {
+//   return  dispatch => {
+//     blogService.setToken(token)
+//     dispatch({
+//       type: 'SET_TOKEN',
+//     })
+//   }
+// }
 
 
 export default blogReducer

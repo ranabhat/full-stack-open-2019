@@ -1,23 +1,28 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import {
+//  BrowserRouter as Router,
+//  Route, Link, Redirect,
+  withRouter
+} from 'react-router-dom'
 //import blogService from '../services/blogs'
 import Notification from './Notification'
 import { login } from '../reducers/userReducer'
 import { displayNotificationFor } from '../reducers/notificationReducer'
-import { setTokenForUser } from '../reducers/blogReducer'
+//import { setTokenForUser } from '../reducers/blogReducer'
 
-
-
-
-const LoginForm = (props) => {
+let LoginForm = (props) => {
   console.log(props)
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
       props.login({ username: event.target.username.value , password: event.target.password.value })
+      props.history.push('/')
+
     } catch (exception) {
-      displayNotificationFor({ text:'wrong username or password' }, 10)
+      displayNotificationFor('wrong username or password', 10)
     }
+
   }
   return(
       <>
@@ -30,7 +35,7 @@ const LoginForm = (props) => {
             name="Username"
             className='username'
           /> */}
-          <input name="username" />
+          <input name="username" required />
         </div>
         <div>
               password
@@ -46,5 +51,5 @@ const LoginForm = (props) => {
   )
 
 }
-
-export default connect(null, { login, displayNotificationFor, setTokenForUser })(LoginForm)
+LoginForm = withRouter(LoginForm)
+export default connect(null, { login, displayNotificationFor })(LoginForm)
