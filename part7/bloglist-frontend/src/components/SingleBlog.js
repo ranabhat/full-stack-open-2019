@@ -2,10 +2,10 @@ import React from 'react'
 import { connect } from 'react-redux'
 import {
   // BrowserRouter as Router,
-  // Route, Link, Redirect,
+//  Route, Link, Redirect,
   withRouter
 } from 'react-router-dom'
-import Notification from './Notification'
+// import Notification from './Notification'
 // import Togglable from './Togglable'
 // import FormBlogCreate from './FormBlogCreate'
 //import Blog from './Blog'
@@ -41,7 +41,7 @@ let SingleBlog = (props) => {
   return(
     <div>
       <h2>blog app</h2>
-      <Notification />
+      {/* <Notification /> */}
       {/* <div> <p>{props.user.name}is logged in
         <button onClick={() => {
           props.logOut()
@@ -51,7 +51,7 @@ let SingleBlog = (props) => {
           logout</button></p></div> */}
       <h2>{props.singleBlog.title}</h2>
       <div className="allBlogContent">
-        {props.singleBlog.url} <br/>
+        <a href={props.singleBlog.url}> {props.singleBlog.url}</a> <br/>
         {props.singleBlog.likes + ' likes'} <button onClick={handleLikeClick(props.singleBlog.id)}>likes</button><br/>
         {`Added by ${props.singleBlog.user.name===undefined ? props.user.name : props.singleBlog.user.name}`} <br/>
         {props.user.name === props.singleBlog.user.name ?

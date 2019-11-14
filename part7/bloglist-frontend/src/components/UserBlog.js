@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import Notification from './Notification'
+// import Notification from './Notification'
 import Togglable from './Togglable'
 import FormBlogCreate from './FormBlogCreate'
 import Blog from './Blog'
@@ -14,7 +14,7 @@ const UserBlog = (props) => {
   return(
     <div>
       <h2>blog app</h2>
-      <Notification  />
+      {/* <Notification  /> */}
       {/* <div> <p>{props.user.name} is logged in
         <button onClick={() => {
           props.logOut()

@@ -3,10 +3,11 @@ import { connect } from 'react-redux'
 
 import {
   BrowserRouter as Router,
-  Route, Link, Redirect, withRouter
+  Route, Link, Redirect
 } from 'react-router-dom'
 //import loginService from './services/login'
 //import blogService from './services/blogs'
+import { Container } from 'semantic-ui-react'
 import LoginForm from './components/LoginForm'
 import Users from './components/Users'
 import UserBlog from './components/UserBlog'
@@ -19,6 +20,7 @@ import { logOut } from './reducers/userReducer'
 import LogOutButton from './components/LogOutButton'
 //import { setTokenForUser } from './reducers/blogReducer'
 //import { getUser } from './reducers/userReducer'
+import Notification from './components/Notification'
 
 
 const App = (props) => {
@@ -33,7 +35,7 @@ const App = (props) => {
   }, [])
 
   useEffect(() => {
-    const loggedUserJSON = window.localStorage.getItem('loggedBlogAppUser')
+    const loggedUserJSON = localStorage.getItem('loggedBlogAppUser')
     console.log('loggedUserJSOnm', loggedUserJSON)
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
@@ -48,7 +50,7 @@ const App = (props) => {
   console.log('app toimi', props)
   //console.log('user', user)
   return(
-    <div>
+    <Container>
       <Router>
         <div>
           <div>
@@ -67,6 +69,7 @@ const App = (props) => {
               </>
             }
           </div>
+          <Notification />
           {/* <h2>Log in to application</h2> */}
           {/* {props.user === false */}
           <Route exact path="/login" render={() =>
@@ -92,7 +95,7 @@ const App = (props) => {
           />
         </div>
       </Router>
-    </div>
+    </Container>
   )
 }
 
@@ -116,13 +119,15 @@ const mapStateToProps = (state) => {
 
   const singleBlog=state.blogs.find(a => a.id === '5dbca389327808225f1667b5')
   console.log('single-blog', singleBlog)
-  console.log('logged in user',state.user === {})
+  console.log('logged in user',state.user)
   console.log(' is prop user length not equal to zero', Object.keys(state.user).length !== 0)
+  console.log('notification in app', state.notify === '')
   return {
     user: Object.keys(state.user).length !== 0,
     blogs: Object.entries(groupByUserId),
     blogSingle: state.blogs,
-    loggedInUser: state.user
+    loggedInUser: state.user,
+    notification: state.notify,
   }
 }
 

@@ -6,7 +6,7 @@ import {
   Link,
   withRouter
 } from 'react-router-dom'
-import Notification from './Notification'
+// import Notification from './Notification'
 // import Togglable from './Togglable'
 // import FormBlogCreate from './FormBlogCreate'
 //import Blog from './Blog'
@@ -21,7 +21,7 @@ let Users = (props) => {
     <div>
       {/* <Router> */}
       <h2>blog app</h2>
-      <Notification  />
+      {/* <Notification  /> */}
       {/* <div> <p>{props.user.name} is logged in
         <button onClick={() => {
           props.logOut()

@@ -6,7 +6,7 @@ import {
   withRouter
 } from 'react-router-dom'
 //import blogService from '../services/blogs'
-import Notification from './Notification'
+// import Notification from './Notification'
 import { login } from '../reducers/userReducer'
 import { displayNotificationFor } from '../reducers/notificationReducer'
 //import { setTokenForUser } from '../reducers/blogReducer'
@@ -17,17 +17,19 @@ let LoginForm = (props) => {
     event.preventDefault()
     try {
       props.login({ username: event.target.username.value , password: event.target.password.value })
+      props.displayNotificationFor('welcome', 10)
       props.history.push('/')
 
+
     } catch (exception) {
-      displayNotificationFor('wrong username or password', 10)
+      props.displayNotificationFor('wrong username or password', 10)
     }
 
   }
   return(
       <>
       <h2>login to the application</h2>
-      <Notification  />
+      {/* <Notification  /> */}
       <form onSubmit= {handleLogin} className='form'>
         <div>
                 username
