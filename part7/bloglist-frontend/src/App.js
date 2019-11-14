@@ -15,11 +15,14 @@ import SingleBlog from './components/SingleBlog'
 //import { useField } from './hooks'
 import { login } from './reducers/userReducer'
 import { initializeBlogs } from './reducers/blogReducer'
+import { logOut } from './reducers/userReducer'
+import LogOutButton from './components/LogOutButton'
 //import { setTokenForUser } from './reducers/blogReducer'
 //import { getUser } from './reducers/userReducer'
 
-const App = (props) => {
 
+const App = (props) => {
+  const padding = { padding: 5 }
   /**************************************Fetching data from server *************************************************/
   useEffect(() => {
     // blogService
@@ -48,20 +51,39 @@ const App = (props) => {
     <div>
       <Router>
         <div>
-          {/* <h2>Log in to application</h2> */}
-          {props.user === false
-            ? <Route exact path="/" render={() =>
-              <LoginForm
-              />}
-            />
-
-            :<Route exact path="/" render={() =>
-              // props.user ? <Users
-              // /> : <Redirect to="/" />
-              <UserBlog />
+          <div>
+            <Link style={padding} to="/">blogs</Link>
+            <Link style={padding} to="/users">users</Link>
+            {/* <Link style={padding} to="/users">users</Link> */}
+            {props.user === false
+              ? <Link to="/login">login</Link>
+              : <><em>{props.loggedInUser.name} logged in</em>
+                {/* <button onClick={() => {
+                  props.logOut()
+                  props.history.push('/login')
+                }
+                }>logout</button> */}
+                <LogOutButton />
+              </>
             }
-            />
+          </div>
+          {/* <h2>Log in to application</h2> */}
+          {/* {props.user === false */}
+          <Route exact path="/login" render={() =>
+            !props.user ? <LoginForm /> : <Redirect to="/"
+            />}
+          />
+
+          <Route exact path="/" render={() =>
+            props.user ? <UserBlog
+            /> : <Redirect to="/login" />
+
           }
+          />
+          {/* } */}
+          <Route exact path="/users" render={() =>
+            props.user ? <Users /> : <Redirect to="/login" />
+          } />
           <Route exact path="/users/:id" render={({ match }) =>
             <User idUserArray={props.blogs.find(a => a[0] === match.params.id)}/> }
           />
@@ -73,6 +95,7 @@ const App = (props) => {
     </div>
   )
 }
+
 
 const mapStateToProps = (state) => {
   console.log('app user state', Object.keys(state.user).length === 0)
@@ -93,11 +116,15 @@ const mapStateToProps = (state) => {
 
   const singleBlog=state.blogs.find(a => a.id === '5dbca389327808225f1667b5')
   console.log('single-blog', singleBlog)
+  console.log('logged in user',state.user === {})
+  console.log(' is prop user length not equal to zero', Object.keys(state.user).length !== 0)
   return {
     user: Object.keys(state.user).length !== 0,
     blogs: Object.entries(groupByUserId),
-    blogSingle: state.blogs
+    blogSingle: state.blogs,
+    loggedInUser: state.user
   }
 }
 
-export default connect(mapStateToProps, { login, initializeBlogs })(App)
+
+export default connect(mapStateToProps, { login, logOut, initializeBlogs })(App)

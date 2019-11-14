@@ -20,15 +20,15 @@ let Users = (props) => {
   return(
     <div>
       {/* <Router> */}
-      <h2>blogs</h2>
+      <h2>blog app</h2>
       <Notification  />
-      <div> <p>{props.user.name} is logged in
+      {/* <div> <p>{props.user.name} is logged in
         <button onClick={() => {
           props.logOut()
           props.history.push('/')
         }
         }>
-          logout</button></p></div>
+          logout</button></p></div> */}
       <div>
         <h2>Users</h2>
         <table>

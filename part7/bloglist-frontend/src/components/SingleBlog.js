@@ -26,6 +26,7 @@ let SingleBlog = (props) => {
     if( window.confirm(`remove blog ${findBlogToDelete.title} by ${findBlogToDelete.author} `)) {
 
       props.deleteBlog(findBlogToDelete.id)
+      props.history.push('/')
     }
   }
 
@@ -39,15 +40,15 @@ let SingleBlog = (props) => {
   }
   return(
     <div>
-      <h2>blogs</h2>
+      <h2>blog app</h2>
       <Notification />
-      <div> <p>{props.user.name}is logged in
+      {/* <div> <p>{props.user.name}is logged in
         <button onClick={() => {
           props.logOut()
           props.history.push('/')
         }
         }>
-          logout</button></p></div>
+          logout</button></p></div> */}
       <h2>{props.singleBlog.title}</h2>
       <div className="allBlogContent">
         {props.singleBlog.url} <br/>
@@ -66,13 +67,15 @@ let SingleBlog = (props) => {
   )
 }
 
-const mapStateToProps = (state) => {
+const mapStateToProps = (state, ownProps) => {
   console.log('from single Blog state prop user', state.user)
+  console.log('own props in Single blog map state', ownProps)
   //   const blogsOfUser = state.blogs.filter(blogs => blogs.user.name === 'Bikesh Maharjan')
   //   console.log('user bikesh blogs', blogsOfUser.map(blog => blog.title))
   return {
     blogs: state.blogs,
     user: state.user,
+    chosenBlog: ownProps,
   }
 }
 const mapDispatchToProps = {

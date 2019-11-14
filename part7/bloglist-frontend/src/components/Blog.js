@@ -38,7 +38,8 @@ let Blog = (props) => {
   //   props.likeBlog(findBlogToLike.id)
   //   props.displayNotificationFor(`you voted ${findBlogToLike.title}` , 10)
   // }
-  console.log('campare for delete', props.user.name === props.blog.user.name)
+  //console.log('campare for delete', props.user.name === props.blog.user.name)
+  if ( props.blog === undefined) { return null }
   return(
     <div style={blogStyle} >
       {/* <div onClick={() => console.log('clicked')}> */}
@@ -53,9 +54,9 @@ let Blog = (props) => {
           }
         </div>
       </BlogPostTogglable> */}
-      <p>
+      <span>
         <Link to={`/blogs/${props.blog.id}`}>{props.blog.title} {props.blog.author}</Link>
-      </p>
+      </span>
 
     </div>
   )

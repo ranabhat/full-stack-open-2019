@@ -1,31 +1,27 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import {
-//  BrowserRouter as Router,
-//  Route, Link, Redirect,
-  withRouter
-} from 'react-router-dom'
 import Notification from './Notification'
 import Togglable from './Togglable'
 import FormBlogCreate from './FormBlogCreate'
 import Blog from './Blog'
 import { logOut } from '../reducers/userReducer'
 
-let UserBlog = (props) => {
+const UserBlog = (props) => {
   // const handleLogOut = () => {
   //   props.logOut()
   // }
+  if ( props.blogsToShow === undefined) { return null }
   return(
     <div>
-      <h2>blogs</h2>
+      <h2>blog app</h2>
       <Notification  />
-      <div> <p>{props.user.name} is logged in
+      {/* <div> <p>{props.user.name} is logged in
         <button onClick={() => {
           props.logOut()
-          props.history.push('/')
+          props.history.push('/login')
         }
         }>
-          logout</button></p></div>
+          logout</button></p></div> */}
       <div>
         <Togglable buttonLabel="new blog">
           <FormBlogCreate
@@ -54,6 +50,6 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   logOut,
 }
-UserBlog = withRouter(UserBlog)
+//UserBlog = withRouter(UserBlog)
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserBlog)
