@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux' // in order to use connect function
 import store from './store'
+
 import App from './App'
 
 // import './index.css'

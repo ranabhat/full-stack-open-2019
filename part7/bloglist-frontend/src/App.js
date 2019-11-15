@@ -15,6 +15,7 @@ import User from './components/User'
 import SingleBlog from './components/SingleBlog'
 //import { useField } from './hooks'
 import { login } from './reducers/userReducer'
+import { keepTheUser } from './reducers/userReducer'
 import { initializeBlogs } from './reducers/blogReducer'
 import { logOut } from './reducers/userReducer'
 import LogOutButton from './components/LogOutButton'
@@ -30,21 +31,35 @@ const App = (props) => {
     // blogService
     //   .getAll()
     //   .then(initialBlogs => setBlogs(initialBlogs))
-    props.initializeBlogs()
+
 
   }, [])
 
-  useEffect(() => {
-    const loggedUserJSON = localStorage.getItem('loggedBlogAppUser')
-    console.log('loggedUserJSOnm', loggedUserJSON)
-    if (loggedUserJSON) {
-      const user = JSON.parse(loggedUserJSON)
-      //setUser(user)
-      console.log('props user token', user)
-      // props.setTokenForUser(user.token)
-    }
-  }, [props])
+  // useEffect(() => {
+  //   const loggedUserJSON = localStorage.getItem('loggedBlogAppUser')
+  //   console.log('loggedUserJSOnm', loggedUserJSON)
+  //   if (loggedUserJSON === undefined) {
+  //     const user = JSON.parse(loggedUserJSON)
+  //     //setUser(user)
+  //     console.log('props user token', user)
+  //     // props.setTokenForUser(user.token)
+  //   }
+  // }, [props])
 
+  useEffect(() => {
+    // const loggedUserJSON = localStorage.getItem('loggedBlogAppUser')
+    // console.log('in effect initial local storqage', loggedUserJSON)
+    // if (loggedUserJSON) {
+    //   const user = JSON.parse(loggedUserJSON)
+    //   // setUser(user)
+    //   // blogService.setToken(user.token)
+    //   props.login({ username: user.username , password: 'sweetlife' })
+    //console.log('json parse logged user user' , user)
+    console.log('first rendeer')
+    props.keepTheUser()
+    props.initializeBlogs()
+
+  }, [])
 
   /*************************************************************************************************************/
   console.log('app toimi', props)
@@ -132,4 +147,4 @@ const mapStateToProps = (state) => {
 }
 
 
-export default connect(mapStateToProps, { login, logOut, initializeBlogs })(App)
+export default connect(mapStateToProps, { login, keepTheUser, logOut, initializeBlogs })(App)

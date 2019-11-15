@@ -10,6 +10,9 @@ const userReducer = (state = initialState, action) => {
   case 'LOGIN':
     console.log('action user now when login', Object.assign({}, action.data))
     return Object.assign({}, action.data)
+  case 'KEEPUSER':
+    console.log('action user KEEEEEEEEP USEEEERRRR', Object.assign({}, action.data))
+    return Object.assign({}, action.data)
   case 'LOGOUT':
     return initialState
   default:
@@ -19,8 +22,8 @@ const userReducer = (state = initialState, action) => {
 export const login = credentials => {
   return async dispatch => {
     const newUser = await loginService.login(credentials)
-    blogService.setToken(newUser.token)
     localStorage.setItem('loggedBlogAppUser', JSON.stringify(newUser))
+    blogService.setToken(newUser.token)
     dispatch({
       type: 'LOGIN',
       data: newUser
@@ -35,6 +38,23 @@ export const login = credentials => {
 //     })
 //   }
 // }
+export const keepTheUser = () => {
+  return async dispatch => {
+    const loggedUserJSON = localStorage.getItem('loggedBlogAppUser')
+    //console.log('in effect initial local storqage', loggedUserJSON)
+    if (loggedUserJSON) {
+      const user = JSON.parse(loggedUserJSON)
+      localStorage.setItem('loggedBlogAppUser', JSON.stringify(user))
+      blogService.setToken(user.token)
+      dispatch({
+        type: 'KEEPUSER',
+        data: user
+      })
+
+
+    }
+  }
+}
 
 export const logOut = () => {
   return dispatch => {
