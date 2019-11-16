@@ -17,11 +17,13 @@ let LoginForm = (props) => {
     event.preventDefault()
     try {
       props.login({ username: event.target.username.value , password: event.target.password.value })
-      props.displayNotificationFor('welcome', 10)
+      // console.log('log in to ', logInTo)
+      // !logInTo
+      //   ?  props.displayNotificationFor('wrong username or password', 10)
+
+      //   : props.displayNotificationFor('welcome', 10)
       props.history.push('/')
-
-
-    } catch (exception) {
+    } catch (error) {
       props.displayNotificationFor('wrong username or password', 10)
     }
 
@@ -37,7 +39,7 @@ let LoginForm = (props) => {
             name="Username"
             className='username'
           /> */}
-          <input name="username" required />
+          <input name="username" />
         </div>
         <div>
               password
@@ -54,4 +56,11 @@ let LoginForm = (props) => {
 
 }
 LoginForm = withRouter(LoginForm)
-export default connect(null, { login, displayNotificationFor })(LoginForm)
+
+const mapStateToProps = (state) => {
+  console.log('state prop in login form', state.user)
+  return {
+    user: state.user
+  }
+}
+export default connect(mapStateToProps, { login, displayNotificationFor })(LoginForm)

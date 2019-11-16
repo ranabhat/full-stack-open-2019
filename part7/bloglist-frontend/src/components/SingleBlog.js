@@ -63,6 +63,15 @@ let SingleBlog = (props) => {
         <li key={blog.id}>{blog.title}</li>
 
       )} */}
+      <h3>comments</h3>
+      {!props.singleBlog.comments
+
+        ? ''
+
+        : props.singleBlog.comments.map(obje => <li key={obje._id}>{obje.text}</li>)
+
+      }
+
     </div>
   )
 }

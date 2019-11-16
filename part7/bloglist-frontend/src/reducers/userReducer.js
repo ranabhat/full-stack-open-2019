@@ -21,13 +21,25 @@ const userReducer = (state = initialState, action) => {
 }
 export const login = credentials => {
   return async dispatch => {
-    const newUser = await loginService.login(credentials)
-    localStorage.setItem('loggedBlogAppUser', JSON.stringify(newUser))
-    blogService.setToken(newUser.token)
-    dispatch({
-      type: 'LOGIN',
-      data: newUser
-    })
+    try {
+      const newUser = await loginService.login(credentials)
+      localStorage.setItem('loggedBlogAppUser', JSON.stringify(newUser))
+      blogService.setToken(newUser.token)
+      dispatch({
+        type: 'LOGIN',
+        data: newUser
+      })
+    } catch (error) {
+      const errorEmptyUser = {}
+      dispatch({
+        type: 'LOGIN',
+        data: errorEmptyUser
+      })
+    }
+    // dispatch({
+    //   type: 'LOGIN',
+    //   data: newUser
+    // })
   }
 }
 

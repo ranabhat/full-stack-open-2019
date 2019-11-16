@@ -11,7 +11,8 @@ const blogSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
+  comments: [{ text: { type: String } }]
 })
 
 // Apply the uniqueValidator plugin to userSchema to guarantee unique name
@@ -27,3 +28,4 @@ blogSchema.set('toJSON', {
 })
 
 module.exports = mongoose.model('Blog', blogSchema)
+

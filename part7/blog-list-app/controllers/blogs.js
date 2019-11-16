@@ -29,7 +29,8 @@ blogsRouter.post('/', async (request, response, next) => {
       author: body.author,
       url: body.url,
       likes: body.likes === undefined ? 0 : body.likes,
-      user: user._id
+      user: user._id,
+      comments: [] //
     })
     // try {
     const savedBlog = await blog.save()
@@ -79,7 +80,8 @@ blogsRouter.put('/:id', async(request, response, next) => {
       author: body.author,
       url: body.url,
       likes: previousLikesFromBlog + 1,
-      user: user._id
+      user: user._id,
+      comments: body.comments
     }
     //const blogs = await Blog.find({})
     // const blogForWhomLikeToUpdate = blogs.filter(blog => blog.id === request.params.id)
@@ -99,5 +101,34 @@ blogsRouter.put('/:id', async(request, response, next) => {
     next(exception)
   }
 })
+
+blogsRouter.post('/:id/comments', async (request, response, next) => {
+  const body = request.body
+  console.log('body comments request', Object.values(body))
+  try {
+
+    // const user = await User.findById(body.userId)
+    const blogs = await Blog.findById(request.params.id)
+
+    const blog = {
+      title: blogs.title,
+      author: blogs.author,
+      url: blogs.url,
+      likes: blogs.likes,
+      user: blogs.user._id,
+      comments: blogs.comments.concat(Object.assign({}, { text: body.text }))
+    }
+    const blogToUpdate = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
+    response.json(blogToUpdate.toJSON())
+    // try {
+    // const savedComment = await comment.save()
+    // user.blogs = user.blogs.concat(savedBlog._id)
+    // await user.save()
+    // response.json(savedBlog.toJSON())
+  } catch (exception) {
+    next(exception)
+  }
+})
+
 
 module.exports = blogsRouter
