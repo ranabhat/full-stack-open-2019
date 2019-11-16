@@ -13,6 +13,7 @@ import { deleteBlog } from '../reducers/blogReducer'
 import { likeBlog } from '../reducers/blogReducer'
 import { displayNotificationFor } from '../reducers/notificationReducer'
 import { logOut } from '../reducers/userReducer'
+import { commentBlog } from '../reducers/blogReducer'
 
 let SingleBlog = (props) => {
   // const handleLogOut = () => {
@@ -37,6 +38,21 @@ let SingleBlog = (props) => {
     console.log('findblogtolike', findBlogToLike)
     props.likeBlog(findBlogToLike.id)
     props.displayNotificationFor(`you voted ${findBlogToLike.title}` , 10)
+  }
+
+  const addComment =  async (event) => {
+    event.preventDefault()
+    console.log('button clicked', event.target)
+    const comment = event.target.comment.value
+    console.log('typed', comment)
+    event.target.comment.value = ''
+    const commentObject = {
+      text : comment
+    }
+    console.log('comment to be posted', commentObject)
+    console.log('chosen blog id in add comment', Object.values(props.chosenBlog)[0].id)
+    props.commentBlog(Object.values(props.chosenBlog)[0].id, commentObject)
+
   }
   return(
     <div>
@@ -64,6 +80,10 @@ let SingleBlog = (props) => {
 
       )} */}
       <h3>comments</h3>
+      <form onSubmit={addComment}>
+        <input name="comment"/>
+        <button type="submit">add comment</button>
+      </form>
       {!props.singleBlog.comments
 
         ? ''
@@ -92,6 +112,7 @@ const mapDispatchToProps = {
   displayNotificationFor,
   likeBlog,
   logOut,
+  commentBlog
 }
 SingleBlog = withRouter(SingleBlog)
 

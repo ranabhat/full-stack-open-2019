@@ -17,6 +17,12 @@ const blogReducer = (state = [], action) => {
       likes: blogToLike.likes + 1
     }
     return state.map(blog => blog.id !== id ? blog : changedBlog)
+  case 'ADD_COMMENT':
+    // eslint-disable-next-line no-case-declarations
+    //const id1 = action.data.id
+    //const blogToComment = state.find(n => n.id === id1)
+    // console.log('add comment id', id1)
+    return state.map(blog => (blog.id === action.data.id) ? action.data : blog)
 
   case 'DELETE_BLOG':
     return action.data
@@ -49,6 +55,15 @@ export const createBlog = content => {
   }
 }
 
+export const commentBlog = (id, content) => {
+  return async dispatch => {
+    const withCommentBlog = await blogService.comment(id, content)
+    dispatch({
+      type: 'ADD_COMMENT',
+      data: withCommentBlog
+    })
+  }
+}
 
 export const deleteBlog = (id) => {
   return async dispatch => {

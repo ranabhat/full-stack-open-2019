@@ -116,7 +116,7 @@ blogsRouter.post('/:id/comments', async (request, response, next) => {
       url: blogs.url,
       likes: blogs.likes,
       user: blogs.user._id,
-      comments: blogs.comments.concat(Object.assign({}, { text: body.text }))
+      comments: blogs.comments === null ? [Object.assign({}, { text: body.text })] : blogs.comments.concat(Object.assign({}, { text: body.text }))
     }
     const blogToUpdate = await Blog.findByIdAndUpdate(request.params.id, blog, { new: true })
     response.json(blogToUpdate.toJSON())
