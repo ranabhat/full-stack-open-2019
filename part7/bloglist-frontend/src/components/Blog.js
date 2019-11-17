@@ -5,6 +5,7 @@ import {
   Link,
   withRouter
 } from 'react-router-dom'
+import { Segment } from 'semantic-ui-react'
 //import BlogPostTogglable from './BlogPostTogglable'
 import { deleteBlog } from '../reducers/blogReducer'
 import { likeBlog } from '../reducers/blogReducer'
@@ -12,13 +13,13 @@ import { displayNotificationFor } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 
 let Blog = (props) => {
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
-  }
+  // const blogStyle = {
+  //   paddingTop: 10,
+  //   paddingLeft: 2,
+  //   border: 'solid',
+  //   borderWidth: 1,
+  //   marginBottom: 5
+  // }
 
   //console.log('propsblog',[props.blog])
 
@@ -41,9 +42,9 @@ let Blog = (props) => {
   //console.log('campare for delete', props.user.name === props.blog.user.name)
   if ( props.blog === undefined) { return null }
   return(
-    <div style={blogStyle} >
-      {/* <div onClick={() => console.log('clicked')}> */}
-      {/* <BlogPostTogglable titleLabel={props.blog.title} authorLabel={props.blog.author}>
+  // <div style={blogStyle} >
+  /* <div onClick={() => console.log('clicked')}> */
+  /* <BlogPostTogglable titleLabel={props.blog.title} authorLabel={props.blog.author}>
         <div className="allBlogContent">
           {props.blog.url} <br/>
           {props.blog.likes + ' likes'} <button onClick={handleLikeClick(props.blog.id)}>likes</button><br/>
@@ -53,12 +54,12 @@ let Blog = (props) => {
             : null
           }
         </div>
-      </BlogPostTogglable> */}
-      <span>
-        <Link to={`/blogs/${props.blog.id}`}>{props.blog.title} {props.blog.author}</Link>
-      </span>
+      </BlogPostTogglable> */
+    <Segment color='red'>
+      <Link to={`/blogs/${props.blog.id}`}>{props.blog.title} {props.blog.author}</Link>
+    </Segment>
 
-    </div>
+  // </div>
   )
 }
 

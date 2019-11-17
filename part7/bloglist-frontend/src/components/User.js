@@ -5,6 +5,7 @@ import {
   // Route, Link, Redirect,
   withRouter
 } from 'react-router-dom'
+import { List, Segment } from 'semantic-ui-react'
 //import Notification from './Notification'
 // import Togglable from './Togglable'
 // import FormBlogCreate from './FormBlogCreate'
@@ -29,10 +30,23 @@ let User = (props) => {
           logout</button></p></div>
       <h2>{props.idUserArray[1][0].name}</h2>
       <h3>Added Blogs</h3>
-      {props.blogs.filter(blogs => blogs.user.name === props.idUserArray[1][0].name).map(blog =>
+      {/* {props.blogs.filter(blogs => blogs.user.name === props.idUserArray[1][0].name).map(blog =>
         <li key={blog.id}>{blog.title}</li>
 
-      )}
+      )} */}
+      <Segment inverted>
+        <List divided inverted relaxed>
+          {props.blogs.filter(blogs => blogs.user.name === props.idUserArray[1][0].name).map(blog =>
+            <List.Item key={blog.id}>
+              <List.Content>
+                <List.Header>{blog.title}</List.Header>
+              </List.Content>
+            </List.Item>
+
+
+          )}
+        </List>
+      </Segment>
     </div>
   )
 }

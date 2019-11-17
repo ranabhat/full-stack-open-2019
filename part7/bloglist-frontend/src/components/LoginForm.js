@@ -5,6 +5,7 @@ import {
 //  Route, Link, Redirect,
   withRouter
 } from 'react-router-dom'
+import { Form, Button } from 'semantic-ui-react'
 //import blogService from '../services/blogs'
 // import Notification from './Notification'
 import { login } from '../reducers/userReducer'
@@ -32,25 +33,17 @@ let LoginForm = (props) => {
       <>
       <h2>login to the application</h2>
       {/* <Notification  /> */}
-      <form onSubmit= {handleLogin} className='form'>
-        <div>
-                username
-          {/* <input {...username}
-            name="Username"
-            className='username'
-          /> */}
-          <input name="username" />
-        </div>
-        <div>
-              password
-          {/* <input {...password}
-            name="Password"
-            className='password'
-          /> */}
-          <input name="password" type="password" />
-        </div>
-        <button type="submit">login</button>
-      </form>
+      <Form onSubmit={handleLogin}>
+        <Form.Field>
+          <label>username</label>
+          <input name='username' />
+        </Form.Field>
+        <Form.Field>
+          <label>password</label>
+          <input name='password' type='password' />
+        </Form.Field>
+        <Button type='submit'>login</Button>
+      </Form>
       </>
   )
 

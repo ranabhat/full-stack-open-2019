@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 //import loginService from './services/login'
 //import blogService from './services/blogs'
-import { Container } from 'semantic-ui-react'
+import { Container, Menu, MenuItem, Message } from 'semantic-ui-react'
 import LoginForm from './components/LoginForm'
 import Users from './components/Users'
 import UserBlog from './components/UserBlog'
@@ -21,11 +21,11 @@ import { logOut } from './reducers/userReducer'
 import LogOutButton from './components/LogOutButton'
 //import { setTokenForUser } from './reducers/blogReducer'
 //import { getUser } from './reducers/userReducer'
-import Notification from './components/Notification'
+//import Notification from './components/Notification'
 
 
 const App = (props) => {
-  const padding = { padding: 5 }
+  //const padding = { padding: 5 }
   /**************************************Fetching data from server *************************************************/
   useEffect(() => {
     // blogService
@@ -66,15 +66,24 @@ const App = (props) => {
   //console.log('user', user)
   return(
     <Container>
+      {(props.notification &&
+        <Message success>
+          {props.notification}
+        </Message>
+      )}
       <Router>
         <div>
-          <div>
-            <Link style={padding} to="/">blogs</Link>
-            <Link style={padding} to="/users">users</Link>
-            {/* <Link style={padding} to="/users">users</Link> */}
-            {props.user === false
-              ? <Link to="/login">login</Link>
-              : <><em>{props.loggedInUser.name} logged in</em>
+          <Menu inverted>
+            <Menu.Item link>
+              <Link to="/">blogs</Link>
+            </Menu.Item>
+            <Menu.Item link>
+              <Link to="/users">users</Link>
+            </Menu.Item>
+            <MenuItem link>
+              {props.user === false
+                ? <Link to="/login">login</Link>
+                : <><em>{props.loggedInUser.name} logged in</em>
                 {/* <button onClick={() => {
                   props.logOut()
                   props.history.push('/login')
@@ -82,9 +91,11 @@ const App = (props) => {
                 }>logout</button> */}
                 <LogOutButton />
               </>
-            }
-          </div>
-          <Notification />
+              }
+            </MenuItem>
+          </Menu>
+          {/* <Notification /> */}
+
           {/* <h2>Log in to application</h2> */}
           {/* {props.user === false */}
           <Route exact path="/login" render={() =>

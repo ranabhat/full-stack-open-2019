@@ -5,16 +5,17 @@ import {
 //  Route, Link, Redirect,
   withRouter
 } from 'react-router-dom'
+import { Button } from 'semantic-ui-react'
 
 import { logOut } from '../reducers/userReducer'
 
 let LogOutButton = (props) => {
   return (
-    <button onClick={() => {
+    <Button onClick={() => {
       props.logOut()
       props.history.push('/login')
     }
-    }>logout</button>
+    }>logout</Button>
   )
 }
 

@@ -6,6 +6,7 @@ import {
   Link,
   withRouter
 } from 'react-router-dom'
+import { Table } from 'semantic-ui-react'
 // import Notification from './Notification'
 // import Togglable from './Togglable'
 // import FormBlogCreate from './FormBlogCreate'
@@ -31,7 +32,7 @@ let Users = (props) => {
           logout</button></p></div> */}
       <div>
         <h2>Users</h2>
-        <table>
+        {/* <table>
           <thead>
             <tr>
               <th></th>
@@ -51,7 +52,29 @@ let Users = (props) => {
 
             )}
           </tbody>
-        </table>
+        </table> */}
+        <Table unstackable>
+          <Table.Header>
+            <Table.Row>
+              <Table.HeaderCell>Users</Table.HeaderCell>
+              <Table.HeaderCell>blogs created</Table.HeaderCell>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {props.blogsToShow.map(blog =>
+              <Table.Row key={blog[0]}>
+                <Table.Cell>
+                  <Link to={`/users/${blog[0]}`}>
+                    {blog[1][0].name}
+                  </Link>
+                </Table.Cell>
+                <Table.Cell>
+                  {blog[1].length}
+                </Table.Cell>
+              </Table.Row>
+            )}
+          </Table.Body>
+        </Table>
 
       </div>
 

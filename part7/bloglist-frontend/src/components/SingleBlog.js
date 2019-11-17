@@ -5,6 +5,8 @@ import {
 //  Route, Link, Redirect,
   withRouter
 } from 'react-router-dom'
+import { Container } from 'semantic-ui-react'
+import { Form, Button } from 'semantic-ui-react'
 // import Notification from './Notification'
 // import Togglable from './Togglable'
 // import FormBlogCreate from './FormBlogCreate'
@@ -55,7 +57,7 @@ let SingleBlog = (props) => {
 
   }
   return(
-    <div>
+    <Container>
       <h2>blog app</h2>
       {/* <Notification /> */}
       {/* <div> <p>{props.user.name}is logged in
@@ -80,10 +82,17 @@ let SingleBlog = (props) => {
 
       )} */}
       <h3>comments</h3>
-      <form onSubmit={addComment}>
+      {/* <form onSubmit={addComment}>
         <input name="comment"/>
         <button type="submit">add comment</button>
-      </form>
+      </form> */}
+      <Form onSubmit={addComment}>
+        <Form.Field>
+          {/* <label>username</label> */}
+          <input name='comment' />
+        </Form.Field>
+        <Button type='submit'>add comment</Button>
+      </Form>
       {!props.singleBlog.comments
 
         ? ''
@@ -92,7 +101,7 @@ let SingleBlog = (props) => {
 
       }
 
-    </div>
+    </Container>
   )
 }
 
