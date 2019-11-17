@@ -7,7 +7,7 @@ import {
 } from 'react-router-dom'
 //import loginService from './services/login'
 //import blogService from './services/blogs'
-import { Container, Menu, MenuItem, Message } from 'semantic-ui-react'
+import { Container, Menu, Message } from 'semantic-ui-react'
 import LoginForm from './components/LoginForm'
 import Users from './components/Users'
 import UserBlog from './components/UserBlog'
@@ -56,9 +56,11 @@ const App = (props) => {
     //   props.login({ username: user.username , password: 'sweetlife' })
     //console.log('json parse logged user user' , user)
     console.log('first rendeer')
-    props.keepTheUser()
-    props.initializeBlogs()
 
+    props.keepTheUser()
+
+    props.initializeBlogs()
+    // eslint-disable-next-line
   }, [])
 
   /*************************************************************************************************************/
@@ -80,19 +82,18 @@ const App = (props) => {
             <Menu.Item link>
               <Link to="/users">users</Link>
             </Menu.Item>
-            <MenuItem link>
-              {props.user === false
-                ? <Link to="/login">login</Link>
-                : <><em>{props.loggedInUser.name} logged in</em>
-                {/* <button onClick={() => {
-                  props.logOut()
-                  props.history.push('/login')
-                }
-                }>logout</button> */}
+            {props.user === false
+              ? <Menu.Item link>
+                <Link to="/login">login</Link>
+              </Menu.Item>
+              :  <> <Menu.Item link>
+                <em>{props.loggedInUser.name} logged in</em>
+              </Menu.Item>
+              <Menu.Item link>
                 <LogOutButton />
-              </>
-              }
-            </MenuItem>
+              </Menu.Item>
+            </>
+            }
           </Menu>
           {/* <Notification /> */}
 
@@ -159,3 +160,4 @@ const mapStateToProps = (state) => {
 
 
 export default connect(mapStateToProps, { login, keepTheUser, logOut, initializeBlogs })(App)
+
