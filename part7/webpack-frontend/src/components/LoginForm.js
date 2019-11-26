@@ -36,13 +36,16 @@ let LoginForm = (props) => {
       <Form onSubmit={handleLogin}>
         <Form.Field>
           <label>username</label>
-          <input name='username' />
+          <input 
+          name='username' />
         </Form.Field>
         <Form.Field>
           <label>password</label>
-          <input name='password' type='password' />
+          <input 
+          name='password' type='password' />
         </Form.Field>
-        <Button type='submit'>login</Button>
+        <Button 
+        type='submit'>login</Button>
       </Form>
       </>
   )

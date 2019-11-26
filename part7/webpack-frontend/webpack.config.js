@@ -18,6 +18,7 @@ const config = (env, argv) => {
         contentBase: path.resolve(__dirname, 'build'),
         compress: true,
         port: 3000,
+        historyApiFallback: true,
     },
     devtool: 'source-map',
     module: {
