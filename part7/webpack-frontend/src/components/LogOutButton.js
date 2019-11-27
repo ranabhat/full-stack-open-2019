@@ -1,8 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
-//  BrowserRouter as Router,
-//  Route, Link, Redirect,
   withRouter
 } from 'react-router-dom'
 import { Button } from 'semantic-ui-react'
@@ -20,12 +18,6 @@ let LogOutButton = (props) => {
 }
 
 LogOutButton = withRouter(LogOutButton)
-
-// const mapStateToProps = (state) => {
-//     return {
-//       user: state.user
-//     }
-//   }
 
 const mapDispatchToProps = {
   logOut,

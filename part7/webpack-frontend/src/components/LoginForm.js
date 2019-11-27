@@ -1,16 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import {
-//  BrowserRouter as Router,
-//  Route, Link, Redirect,
   withRouter
 } from 'react-router-dom'
 import { Form, Button } from 'semantic-ui-react'
-//import blogService from '../services/blogs'
-// import Notification from './Notification'
 import { login } from '../reducers/userReducer'
 import { displayNotificationFor } from '../reducers/notificationReducer'
-//import { setTokenForUser } from '../reducers/blogReducer'
+
 
 let LoginForm = (props) => {
   console.log(props)
@@ -18,11 +14,6 @@ let LoginForm = (props) => {
     event.preventDefault()
     try {
       props.login({ username: event.target.username.value , password: event.target.password.value })
-      // console.log('log in to ', logInTo)
-      // !logInTo
-      //   ?  props.displayNotificationFor('wrong username or password', 10)
-
-      //   : props.displayNotificationFor('welcome', 10)
       props.history.push('/')
     } catch (error) {
       props.displayNotificationFor('wrong username or password', 10)

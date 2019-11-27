@@ -1,8 +1,8 @@
 import blogService from '../services/blogs'
 
 const blogReducer = (state = [], action) => {
-  console.log('state blogReducer now: ', state)
-  console.log('action blogReducer', action)
+  // console.log('state blogReducer now: ', state)
+  // console.log('action blogReducer', action)
   switch(action.type) {
   case 'NEW_BLOG':
     return [...state, action.data]
@@ -97,15 +97,5 @@ export const likeBlog = (id) => {
     })
   }
 }
-
-// export const setTokenForUser = token => {
-//   return  dispatch => {
-//     blogService.setToken(token)
-//     dispatch({
-//       type: 'SET_TOKEN',
-//     })
-//   }
-// }
-
 
 export default blogReducer

@@ -1,6 +1,6 @@
 const notificationReducer = (state = '', action) => {
-  console.log('state notification now: ', state)
-  console.log('action notification', action)
+  // console.log('state notification now: ', state)
+  // console.log('action notification', action)
   switch(action.type) {
   case 'SET_NOTIFICATION':
     return action.notify
