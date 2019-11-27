@@ -6,7 +6,8 @@ describe('Blog  app', function() {
         cy.contains('login to the application')
     })
 
-    it('user can login', function () {
+    describe('when logged in', function() {
+    beforeEach(function () {
         cy.get('input[name=username]')
             .type('bronepeace')
         cy.get('input[name=password]')
@@ -16,5 +17,20 @@ describe('Blog  app', function() {
         cy.contains('new blog')
     
     })
+
+    it('a new blog can be created', function() {
+        cy.contains('new blog')
+            .click()
+            cy.get('input[name=title]')
+                .type('Test with Cypress')
+            cy.get('input[name=author]')
+                .type('Paritosh')
+            cy.get('input[name=url]')
+                .type('http://example.com')
+            cy.get('form').submit()
+            cy.contains('Test with Cypress')
+            
+    })
+})
 
 })
