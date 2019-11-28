@@ -13,7 +13,6 @@ let Users = (props) => {
       <h2>blog app</h2>
       <div>
         <h2>Users</h2>
-        
         <Table unstackable>
           <Table.Header>
             <Table.Row>
@@ -43,8 +42,8 @@ let Users = (props) => {
 }
 
 const mapStateToProps = (state) => {
-  console.log('yes state blogssss', state.blogs)
-  const lomb =  state.blogs.map(blogs => blogs.user)
+  //console.log('yes state blogssss', state.blogs)
+  const blogsUserArray =  state.blogs.map(blogs => blogs.user)
   const groupBy = (objectArray, property)  => {
     return objectArray.reduce((acc, obj) => {
       const key = obj[property]
@@ -55,29 +54,7 @@ const mapStateToProps = (state) => {
       return acc
     }, {})
   }
-  const groupByUserId = groupBy(lomb, 'id')
-  console.log('group by user id',Object.entries(groupByUserId))
-
-  const tomb = state.blogs.map(blogs => blogs.user.name)
-  console.log('tomb', tomb)
-  const countedNames = tomb.reduce( (allNames, name) => {
-    if (name in allNames) {
-      allNames[name]++
-    }
-    else {
-      allNames[name] = 1
-    }
-    return allNames
-  }, {})
-  console.log('countedNames', countedNames)
-  console.log('arrayCountedNames', (Object.entries(countedNames)))
-
-  console.log('user state in Users for User', state.user)
-  const userById = (id) =>
-    Object.entries(groupByUserId).find(a => a[0] === id)
-
-  console.log('user by id', userById('5db03518eec6bb0ae4f589a0'))
-
+  const groupByUserId = groupBy(blogsUserArray, 'id')
   return {
     blogsToShow: Object.entries(groupByUserId),
     user: state.user

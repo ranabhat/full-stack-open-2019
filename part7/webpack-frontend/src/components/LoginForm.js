@@ -9,7 +9,7 @@ import { displayNotificationFor } from '../reducers/notificationReducer'
 
 
 let LoginForm = (props) => {
-  console.log(props)
+ // console.log(props)
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -45,7 +45,7 @@ let LoginForm = (props) => {
 LoginForm = withRouter(LoginForm)
 
 const mapStateToProps = (state) => {
-  console.log('state prop in login form', state.user)
+  //console.log('state prop in login form', state.user)
   return {
     user: state.user
   }

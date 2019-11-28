@@ -55,7 +55,7 @@ const App = (props) => {
     //   // blogService.setToken(user.token)
     //   props.login({ username: user.username , password: 'sweetlife' })
     //console.log('json parse logged user user' , user)
-    console.log('first rendeer')
+   // console.log('first rendeer')
 
     props.keepTheUser()
 
@@ -64,7 +64,7 @@ const App = (props) => {
   }, [])
 
   /*************************************************************************************************************/
-  console.log('app toimi', props)
+  //console.log('app toimi', props)
   //console.log('user', user)
   return(
     <Container>
@@ -128,8 +128,8 @@ const App = (props) => {
 
 
 const mapStateToProps = (state) => {
-  console.log('app user state', Object.keys(state.user).length === 0)
-  console.log(state.blogs)
+  //console.log('app user state', Object.keys(state.user).length === 0)
+ // console.log(state.blogs)
   const mapToBlogUser =  state.blogs.map(blogs => blogs.user)
   const groupBy = (objectArray, property)  => {
     return objectArray.reduce((acc, obj) => {
@@ -142,13 +142,13 @@ const mapStateToProps = (state) => {
     }, {})
   }
   const groupByUserId = groupBy(mapToBlogUser, 'id')
-  console.log('group by user id',Object.entries(groupByUserId))
+ // console.log('group by user id',Object.entries(groupByUserId))
 
-  const singleBlog=state.blogs.find(a => a.id === '5dbca389327808225f1667b5')
-  console.log('single-blog', singleBlog)
-  console.log('logged in user',state.user)
-  console.log(' is prop user length not equal to zero', Object.keys(state.user).length !== 0)
-  console.log('notification in app', state.notify === '')
+ // const singleBlog=state.blogs.find(a => a.id === '5dbca389327808225f1667b5')
+  // console.log('single-blog', singleBlog)
+  // console.log('logged in user',state.user)
+  // console.log(' is prop user length not equal to zero', Object.keys(state.user).length !== 0)
+  // console.log('notification in app', state.notify === '')
   return {
     user: Object.keys(state.user).length !== 0,
     blogs: Object.entries(groupByUserId),
