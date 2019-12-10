@@ -25,25 +25,25 @@ let SingleBlog = (props) => {
   }
 
   const handleLikeClick = id => async() => {
-   // console.log('handlelike id', id)
+    // console.log('handlelike id', id)
   //  console.log('props handle like', props.blogs)
     const findBlogToLike = props.blogs.find(blog => blog.id === id)
-  //  console.log('findblogtolike', findBlogToLike)
+    //  console.log('findblogtolike', findBlogToLike)
     props.likeBlog(findBlogToLike.id)
     props.displayNotificationFor(`you voted ${findBlogToLike.title}` , 10)
   }
 
   const addComment =  async (event) => {
     event.preventDefault()
-  //  console.log('button clicked', event.target)
+    //  console.log('button clicked', event.target)
     const comment = event.target.comment.value
-  //  console.log('typed', comment)
+    //  console.log('typed', comment)
     event.target.comment.value = ''
     const commentObject = {
       text : comment
     }
-  //  console.log('comment to be posted', commentObject)
- //   console.log('chosen blog id in add comment', Object.values(props.chosenBlog)[0].id)
+    //  console.log('comment to be posted', commentObject)
+    //   console.log('chosen blog id in add comment', Object.values(props.chosenBlog)[0].id)
     props.commentBlog(Object.values(props.chosenBlog)[0].id, commentObject)
 
   }

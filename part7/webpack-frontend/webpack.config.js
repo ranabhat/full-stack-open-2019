@@ -2,45 +2,45 @@ const path = require('path')
 const webpack = require('webpack')
 
 const config = (env, argv) => {
-    console.log('argv', argv.mode)
+  console.log('argv', argv.mode)
 
-    const backend_url = argv.mode === 'production'
-        ? 'http://localhost:3003/api/blogs'
-        : 'http://localhost:3003/api/blogs'
+  const backend_url = argv.mode === 'production'
+    ? 'http://localhost:3003/api/blogs'
+    : 'http://localhost:3003/api/blogs'
 
-    return {
+  return {
     entry: ['@babel/polyfill','./src/index.js'],
     output: {
-        path: path.resolve(__dirname, 'build'),
-        filename: 'main.js'
+      path: path.resolve(__dirname, 'build'),
+      filename: 'main.js'
     },
     devServer: {
-        contentBase: path.resolve(__dirname, 'build'),
-        compress: true,
-        port: 3000,
-        historyApiFallback: true,
+      contentBase: path.resolve(__dirname, 'build'),
+      compress: true,
+      port: 3000,
+      historyApiFallback: true,
     },
     devtool: 'source-map',
     module: {
-        rules: [
-            {
-                test: /\.js$/,
-                loader: 'babel-loader',
-                query: {
-                    presets: ['@babel/preset-env','@babel/preset-react'],
-                },
-            },
-            {
-                test: /\.css$/,
-                loaders: ['style-loader', 'css-loader'],
-            },
-            
-        ],
+      rules: [
+        {
+          test: /\.js$/,
+          loader: 'babel-loader',
+          query: {
+            presets: ['@babel/preset-env','@babel/preset-react'],
+          },
+        },
+        {
+          test: /\.css$/,
+          loaders: ['style-loader', 'css-loader'],
+        },
+
+      ],
     },
     plugins: [
-        new webpack.DefinePlugin({
-            BACKEND_URL: JSON.stringify(backend_url)
-        })
+      new webpack.DefinePlugin({
+        BACKEND_URL: JSON.stringify(backend_url)
+      })
     ],
   }
 }

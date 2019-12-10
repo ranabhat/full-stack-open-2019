@@ -13,7 +13,7 @@ import { displayNotificationFor } from '../reducers/notificationReducer'
 import { connect } from 'react-redux'
 
 let Blog = (props) => {
-  
+
   if ( props.blog === undefined) { return null }
   return(
     <Segment color='red'>

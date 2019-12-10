@@ -9,7 +9,7 @@ import { displayNotificationFor } from '../reducers/notificationReducer'
 
 
 let LoginForm = (props) => {
- // console.log(props)
+  // console.log(props)
   const handleLogin = async (event) => {
     event.preventDefault()
     try {
@@ -21,24 +21,24 @@ let LoginForm = (props) => {
 
   }
   return(
-      <>
+    <>
       <h2>login to the application</h2>
       {/* <Notification  /> */}
       <Form onSubmit={handleLogin}>
         <Form.Field>
           <label>username</label>
-          <input 
-          name='username' />
+          <input
+            name='username' />
         </Form.Field>
         <Form.Field>
           <label>password</label>
-          <input 
-          name='password' type='password' />
+          <input
+            name='password' type='password' />
         </Form.Field>
-        <Button 
-        type='submit'>login</Button>
+        <Button
+          type='submit'>login</Button>
       </Form>
-      </>
+    </>
   )
 
 }

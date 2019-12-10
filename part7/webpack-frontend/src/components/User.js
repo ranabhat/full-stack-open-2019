@@ -28,9 +28,9 @@ let User = (props) => {
 }
 
 const mapStateToProps = (state) => {
- // console.log('from single User state prop blogs', state.blogs)
-  const blogsOfUser = state.blogs.filter(blogs => blogs.user.name === 'Bikesh Maharjan')
- // console.log('user bikesh blogs', blogsOfUser.map(blog => blog.title))
+  // console.log('from single User state prop blogs', state.blogs)
+  //const blogsOfUser = state.blogs.filter(blogs => blogs.user.name === 'Bikesh Maharjan')
+  // console.log('user bikesh blogs', blogsOfUser.map(blog => blog.title))
   return {
     blogs: state.blogs,
     user: state.user,

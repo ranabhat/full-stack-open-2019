@@ -5,7 +5,8 @@
   "scripts": {
     "build": "webpack --mode=production",
     "start": "webpack-dev-server --mode=development",
-    "cypress:open": "cypress open"
+    "cypress:open": "cypress open",
+    "eslint": "eslint ."
   },
   "license": "MIT",
   "devDependencies": {
@@ -15,6 +16,8 @@
     "babel-loader": "^8.0.6",
     "css-loader": "^3.2.0",
     "cypress": "^3.6.1",
+    "eslint": "^6.7.2",
+    "eslint-plugin-react": "^7.17.0",
     "style-loader": "^1.0.0",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10",
