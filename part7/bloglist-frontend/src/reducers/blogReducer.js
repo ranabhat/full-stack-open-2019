@@ -19,9 +19,6 @@ const blogReducer = (state = [], action) => {
     return state.map(blog => blog.id !== id ? blog : changedBlog)
   case 'ADD_COMMENT':
     // eslint-disable-next-line no-case-declarations
-    //const id1 = action.data.id
-    //const blogToComment = state.find(n => n.id === id1)
-    // console.log('add comment id', id1)
     return state.map(blog => (blog.id === action.data.id) ? action.data : blog)
 
   case 'DELETE_BLOG':

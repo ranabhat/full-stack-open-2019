@@ -4,14 +4,14 @@ import blogService from '../services/blogs'
 const initialState = {}
 
 const userReducer = (state = initialState, action) => {
-  console.log('state user now', state)
-  console.log('action user now', action.data)
+  // console.log('state user now', state)
+  // console.log('action user now', action.data)
   switch(action.type) {
   case 'LOGIN':
-    console.log('action user now when login', Object.assign({}, action.data))
+    // console.log('action user now when login', Object.assign({}, action.data))
     return Object.assign({}, action.data)
   case 'KEEPUSER':
-    console.log('action user KEEEEEEEEP USEEEERRRR', Object.assign({}, action.data))
+    // console.log('action user KEEEEEEEEP USEEEERRRR', Object.assign({}, action.data))
     return Object.assign({}, action.data)
   case 'LOGOUT':
     return initialState
